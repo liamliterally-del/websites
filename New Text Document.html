@@ -1,0 +1,629 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liamliterally | Premium Beats & Instrumentals</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#0f0f13',
+                            card: '#1a1a24',
+                            accent: '#8b5cf6',
+                            accentHover: '#7c3aed',
+                            text: '#e2e8f0',
+                            muted: '#94a3b8'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f0f13;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a24;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4b5563;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8b5cf6;
+        }
+
+        .bar {
+            width: 4px;
+            background: #8b5cf6;
+            border-radius: 2px;
+            animation: bounce 1s infinite ease-in-out;
+        }
+        @keyframes bounce {
+            0%, 100% { height: 10px; }
+            50% { height: 24px; }
+        }
+        .bar:nth-child(2) { animation-delay: 0.1s; }
+        .bar:nth-child(3) { animation-delay: 0.2s; }
+        .bar:nth-child(4) { animation-delay: 0.3s; }
+        .bar:nth-child(5) { animation-delay: 0.4s; }
+
+        .section-hidden {
+            display: none;
+            opacity: 0;
+        }
+        .section-visible {
+            display: block;
+            opacity: 1;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #c084fc, #6366f1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <nav class="fixed w-full z-50 bg-brand-dark/90 backdrop-blur-md border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0 cursor-pointer" onclick="navigateTo('home')">
+                    <span class="text-2xl font-bold tracking-tighter text-white">LIAM<span class="text-brand-accent">LITERALLY</span></span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <button onclick="navigateTo('home')" class="hover:text-brand-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</button>
+                        <button onclick="navigateTo('catalog')" class="hover:text-brand-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Catalog</button>
+                        <button onclick="navigateTo('licensing')" class="hover:text-brand-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Licensing</button>
+                        <button onclick="navigateTo('contact')" class="bg-brand-accent hover:bg-brand-accentHover text-white px-4 py-2 rounded-full text-sm font-medium transition-all shadow-lg shadow-brand-accent/20">Custom Beats</button>
+                    </div>
+                </div>
+                <div class="-mr-2 flex md:hidden">
+                    <button onclick="toggleMobileMenu()" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-brand-card border-b border-white/10">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <button onclick="navigateTo('home'); toggleMobileMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">Home</button>
+                <button onclick="navigateTo('catalog'); toggleMobileMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">Catalog</button>
+                <button onclick="navigateTo('licensing'); toggleMobileMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">Licensing</button>
+                <button onclick="navigateTo('contact'); toggleMobileMenu()" class="text-brand-accent font-bold block px-3 py-2 rounded-md text-base w-full text-left">Custom Beats</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow pt-16">
+        
+        <section id="home" class="section-visible">
+            <div class="relative bg-brand-card overflow-hidden">
+                <div class="absolute inset-0">
+                    <img class="w-full h-full object-cover opacity-20" src="https://image.qwenlm.ai/public_source/c9d056b1-1b7f-4981-99e9-dd32526f83ec/1629ddd59-d5a6-47d9-8f62-9ffac1caab88.png" alt="Studio Background">
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/80 to-transparent"></div>
+                </div>
+                <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 flex flex-col items-center text-center">
+                    <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-white mb-6">
+                        Elevate Your Sound with <br> <span class="gradient-text">Premium Instrumentals</span>
+                    </h1>
+                    <p class="mt-4 max-w-2xl text-xl text-brand-muted mb-10">
+                        High-quality beats by <strong>Liamliterally</strong>. Instant download, unlimited potential.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button onclick="navigateTo('catalog')" class="px-8 py-4 bg-brand-accent hover:bg-brand-accentHover text-white font-bold rounded-full text-lg transition-all shadow-lg shadow-brand-accent/30 transform hover:-translate-y-1">
+                            Browse Catalog
+                        </button>
+                        <button onclick="navigateTo('licensing')" class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-full text-lg transition-all backdrop-blur-sm border border-white/10">
+                            View Licenses
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                <div class="flex justify-between items-end mb-8">
+                    <h2 class="text-3xl font-bold text-white">Trending Now</h2>
+                    <button onclick="navigateTo('catalog')" class="text-brand-accent hover:text-white font-medium transition-colors">View All <i class="fas fa-arrow-right ml-1"></i></button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="featured-beats-container"></div>
+            </div>
+        </section>
+
+        <section id="catalog" class="section-hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Beat Catalog</h2>
+                <p class="text-brand-muted">Browse the latest collection from Liamliterally.</p>
+                
+                <div class="mt-8 flex flex-col md:flex-row gap-4 justify-center">
+                    <div class="relative w-full md:w-96">
+                        <input type="text" placeholder="Search beats..." class="w-full bg-brand-card border border-white/10 rounded-full py-3 px-6 text-white focus:outline-none focus:border-brand-accent transition-colors">
+                        <i class="fas fa-search absolute right-4 top-3.5 text-gray-500"></i>
+                    </div>
+                    <select class="bg-brand-card border border-white/10 rounded-full py-3 px-6 text-white focus:outline-none focus:border-brand-accent cursor-pointer">
+                        <option>All Genres</option>
+                        <option>Trap</option>
+                        <option>Lo-Fi</option>
+                        <option>Drill</option>
+                        <option>R&B</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="full-catalog-container"></div>
+        </section>
+
+        <section id="licensing" class="section-hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Licensing & Usage Rights</h2>
+                <p class="text-brand-muted max-w-2xl mx-auto">Choose the license that fits your project. All leases include high-quality MP3/WAV files. Exclusive rights available upon request.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-brand-card rounded-2xl p-8 border border-white/5 hover:border-brand-accent/50 transition-all duration-300">
+                    <h3 class="text-xl font-bold text-white mb-2">Basic Lease</h3>
+                    <div class="text-3xl font-bold text-brand-accent mb-6">$29.99</div>
+                    <ul class="space-y-4 mb-8 text-brand-muted">
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> MP3 File</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Up to 50,000 Streams</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Non-Exclusive</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> 1 Music Video</li>
+                    </ul>
+                    <button class="w-full py-3 rounded-lg border border-white/20 hover:bg-white/5 text-white font-medium transition-colors">Select Plan</button>
+                </div>
+
+                <div class="bg-brand-card rounded-2xl p-8 border-2 border-brand-accent relative transform md:-translate-y-4 shadow-2xl shadow-brand-accent/10">
+                    <div class="absolute top-0 right-0 bg-brand-accent text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">POPULAR</div>
+                    <h3 class="text-xl font-bold text-white mb-2">Premium Lease</h3>
+                    <div class="text-3xl font-bold text-brand-accent mb-6">$79.99</div>
+                    <ul class="space-y-4 mb-8 text-brand-muted">
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> MP3 + WAV Files</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Up to 500,000 Streams</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Non-Exclusive</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Unlimited Music Videos</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Radio Play</li>
+                    </ul>
+                    <button class="w-full py-3 rounded-lg bg-brand-accent hover:bg-brand-accentHover text-white font-medium transition-colors shadow-lg">Select Plan</button>
+                </div>
+
+                <div class="bg-brand-card rounded-2xl p-8 border border-white/5 hover:border-brand-accent/50 transition-all duration-300">
+                    <h3 class="text-xl font-bold text-white mb-2">Unlimited Lease</h3>
+                    <div class="text-3xl font-bold text-brand-accent mb-6">$199.99</div>
+                    <ul class="space-y-4 mb-8 text-brand-muted">
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> MP3 + WAV + Stems</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Unlimited Streams</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Non-Exclusive</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Broadcast Rights</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Full Control</li>
+                    </ul>
+                    <button class="w-full py-3 rounded-lg border border-white/20 hover:bg-white/5 text-white font-medium transition-colors">Select Plan</button>
+                </div>
+            </div>
+
+            <div class="mt-16 bg-brand-card/50 rounded-xl p-8 border border-white/5">
+                <h3 class="text-2xl font-bold text-white mb-4">Frequently Asked Questions</h3>
+                <div class="space-y-4">
+                    <details class="group">
+                        <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-white">
+                            <span>Do I get the trackouts/stems?</span>
+                            <span class="transition group-open:rotate-180"><i class="fas fa-chevron-down"></i></span>
+                        </summary>
+                        <div class="text-brand-muted mt-3 group-open:animate-fadeIn">
+                            Stems (trackouts) are only included with the Unlimited Lease or Exclusive rights purchase.
+                        </div>
+                    </details>
+                    <div class="h-px bg-white/10"></div>
+                    <details class="group">
+                        <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-white">
+                            <span>Can I use the beat for YouTube?</span>
+                            <span class="transition group-open:rotate-180"><i class="fas fa-chevron-down"></i></span>
+                        </summary>
+                        <div class="text-brand-muted mt-3 group-open:animate-fadeIn">
+                            Yes! All licenses allow for YouTube usage. Just make sure to credit "Prod. by Liamliterally" in the description.
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="section-hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Need a Custom Beat?</h2>
+                    <p class="text-brand-muted text-lg mb-8">
+                        Looking for something unique? I offer custom beat production services tailored to your specific style and vision. Let's create a hit together.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 h-12 w-12 rounded-lg bg-brand-accent/20 flex items-center justify-center text-brand-accent">
+                                <i class="fas fa-music text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-bold text-white">Exclusive Rights</h4>
+                                <p class="text-brand-muted mt-1">Full ownership of the beat. You own the master recording.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 h-12 w-12 rounded-lg bg-brand-accent/20 flex items-center justify-center text-brand-accent">
+                                <i class="fas fa-sliders-h text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-bold text-white">Custom Mixing</h4>
+                                <p class="text-brand-muted mt-1">I can mix and master your vocals on top of the beat.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-12 pt-8 border-t border-white/10">
+                        <h4 class="text-white font-bold mb-4">Contact Info</h4>
+                        <div class="space-y-2 text-brand-muted">
+                            <p><i class="fas fa-envelope w-6"></i> contact@liamliterally.com</p>
+                            <p><i class="fab fa-instagram w-6"></i> @liamliterally_</p>
+                            <p><i class="fab fa-youtube w-6"></i> @LiamLiterallyWasTaken</p>
+                            <p><i class="fab fa-tiktok w-6"></i> @liamliterally_</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-brand-card p-8 rounded-2xl border border-white/5 shadow-xl">
+                    <form onsubmit="handleContactSubmit(event)">
+                        <div class="grid grid-cols-1 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-brand-muted mb-2">Name</label>
+                                <input type="text" required class="w-full bg-brand-dark border border-white/10 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-brand-accent transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brand-muted mb-2">Email</label>
+                                <input type="email" required class="w-full bg-brand-dark border border-white/10 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-brand-accent transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brand-muted mb-2">Project Type</label>
+                                <select class="w-full bg-brand-dark border border-white/10 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-brand-accent transition-colors">
+                                    <option>Custom Beat Production</option>
+                                    <option>Exclusive Rights Inquiry</option>
+                                    <option>Mixing/Mastering</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brand-muted mb-2">Message / Reference Links</label>
+                                <textarea rows="4" required class="w-full bg-brand-dark border border-white/10 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-brand-accent transition-colors"></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-brand-accent hover:bg-brand-accentHover text-white font-bold py-4 rounded-lg transition-all shadow-lg shadow-brand-accent/20">
+                                Send Request
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-brand-card border-t border-white/10 pt-12 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="col-span-1 md:col-span-2">
+                    <span class="text-2xl font-bold tracking-tighter text-white">LIAM<span class="text-brand-accent">LITERALLY</span></span>
+                    <p class="mt-4 text-brand-muted max-w-sm">
+                        Providing high-quality instrumentals for artists worldwide. Join the community and start creating today.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-brand-muted">
+                        <li><button onclick="navigateTo('home')" class="hover:text-brand-accent transition-colors">Home</button></li>
+                        <li><button onclick="navigateTo('catalog')" class="hover:text-brand-accent transition-colors">Catalog</button></li>
+                        <li><button onclick="navigateTo('licensing')" class="hover:text-brand-accent transition-colors">Licensing</button></li>
+                        <li><button onclick="navigateTo('contact')" class="hover:text-brand-accent transition-colors">Contact</button></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">Connect</h4>
+                    <div class="flex space-x-4">
+                        <a href="https://www.youtube.com/@LiamLiterallyWasTaken" target="_blank" class="h-10 w-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-red-600 transition-all">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="https://instagram.com/liamliterally_" target="_blank" class="h-10 w-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-pink-600 transition-all">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://tiktok.com/@liamliterally_" target="_blank" class="h-10 w-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-black transition-all border border-white/20">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="https://www.youtube.com/@LiamLiterallyWasTaken" target="_blank" class="h-10 w-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-orange-500 transition-all">
+                            <i class="fab fa-soundcloud"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-brand-muted text-sm">&copy; 2026 Liamliterally. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0 text-sm text-brand-muted">
+                    <a href="#" class="hover:text-white">Privacy Policy</a>
+                    <a href="#" class="hover:text-white">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div id="audio-player" class="fixed bottom-0 left-0 right-0 bg-brand-card/95 backdrop-blur-lg border-t border-white/10 p-4 transform translate-y-full transition-transform duration-300 z-50">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-4 w-1/3">
+                <img id="player-cover" src="" alt="Cover" class="h-12 w-12 rounded object-cover shadow-lg">
+                <div class="overflow-hidden">
+                    <h4 id="player-title" class="text-white font-bold truncate">Select a beat</h4>
+                    <p id="player-artist" class="text-xs text-brand-muted">Prod. by Liamliterally</p>
+                </div>
+            </div>
+            
+            <div class="flex flex-col items-center w-1/3">
+                <div class="flex items-center space-x-6 mb-2">
+                    <button class="text-brand-muted hover:text-white"><i class="fas fa-step-backward"></i></button>
+                    <button id="play-pause-btn" onclick="togglePlay()" class="h-10 w-10 rounded-full bg-white text-brand-dark flex items-center justify-center hover:scale-105 transition-transform">
+                        <i class="fas fa-play ml-1"></i>
+                    </button>
+                    <button class="text-brand-muted hover:text-white"><i class="fas fa-step-forward"></i></button>
+                </div>
+                <div class="w-full flex items-center space-x-2">
+                    <span class="text-xs text-brand-muted">0:00</span>
+                    <div class="h-1 bg-white/20 rounded-full flex-grow relative overflow-hidden">
+                        <div class="absolute top-0 left-0 h-full bg-brand-accent w-1/3"></div>
+                    </div>
+                    <span class="text-xs text-brand-muted">2:45</span>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-end space-x-4 w-1/3">
+                <div class="flex items-center space-x-2 group">
+                    <i class="fas fa-volume-up text-brand-muted"></i>
+                    <div class="w-20 h-1 bg-white/20 rounded-full overflow-hidden">
+                        <div class="h-full bg-white w-2/3"></div>
+                    </div>
+                </div>
+                <button id="player-action-btn" class="px-4 py-2 bg-brand-accent hover:bg-brand-accentHover text-white text-sm font-bold rounded-full transition-colors">
+                    Buy $29.99
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const beats = [
+            {
+                id: 1,
+                title: "Neon Nights",
+                genre: "Trap",
+                bpm: 140,
+                key: "C Minor",
+                price: 29.99,
+                isFree: false,
+                cover: "https://image.qwenlm.ai/public_source/c9d056b1-1b7f-4981-99e9-dd32526f83ec/1d4b8f886-f8ba-4c86-b2f5-d31873ec6823.png"
+            },
+            {
+                id: 2,
+                title: "Rainy Study Session",
+                genre: "Lo-Fi",
+                bpm: 85,
+                key: "F Major",
+                price: 0,
+                isFree: true,
+                cover: "https://image.qwenlm.ai/public_source/c9d056b1-1b7f-4981-99e9-dd32526f83ec/1c5a6a4e4-4215-4922-a790-485cef9331f5.png"
+            },
+            {
+                id: 3,
+                title: "Street Code",
+                genre: "Drill",
+                bpm: 144,
+                key: "G Minor",
+                price: 34.99,
+                isFree: false,
+                cover: "https://image.qwenlm.ai/public_source/c9d056b1-1b7f-4981-99e9-dd32526f83ec/1862412b5-7ca1-4e22-82b0-22a4ce2df853.png"
+            },
+            {
+                id: 4,
+                title: "Midnight Drive",
+                genre: "R&B",
+                bpm: 95,
+                key: "A Minor",
+                price: 29.99,
+                isFree: false,
+                cover: "https://image.qwenlm.ai/public_source/c9d056b1-1b7f-4981-99e9-dd32526f83ec/1629ddd59-d5a6-47d9-8f62-9ffac1caab88.png"
+            },
+            {
+                id: 5,
+                title: "Golden Hour",
+                genre: "Trap",
+                bpm: 130,
+                key: "D Major",
+                price: 29.99,
+                isFree: false,
+                cover: "https://image.qwenlm.ai/public_source/c9d056b1-1b7f-4981-99e9-dd32526f83ec/1d4b8f886-f8ba-4c86-b2f5-d31873ec6823.png"
+            },
+            {
+                id: 6,
+                title: "Coffee Shop",
+                genre: "Lo-Fi",
+                bpm: 80,
+                key: "C Major",
+                price: 0,
+                isFree: true,
+                cover: "https://image.qwenlm.ai/public_source/c9d056b1-1b7f-4981-99e9-dd32526f83ec/1c5a6a4e4-4215-4922-a790-485cef9331f5.png"
+            }
+        ];
+
+        let isPlaying = false;
+        let currentBeat = null;
+
+        function navigateTo(sectionId) {
+            document.querySelectorAll('main > section').forEach(section => {
+                section.classList.remove('section-visible');
+                section.classList.add('section-hidden');
+            });
+            
+            const target = document.getElementById(sectionId);
+            target.classList.remove('section-hidden');
+            target.classList.add('section-visible');
+            
+            window.scrollTo(0, 0);
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function renderBeats() {
+            const featuredContainer = document.getElementById('featured-beats-container');
+            const catalogContainer = document.getElementById('full-catalog-container');
+            
+            beats.slice(0, 3).forEach(beat => {
+                featuredContainer.innerHTML += createBeatCard(beat);
+            });
+
+            beats.forEach(beat => {
+                catalogContainer.innerHTML += createBeatCard(beat);
+            });
+        }
+
+        function createBeatCard(beat) {
+            const btnClass = beat.isFree 
+                ? 'bg-green-600 hover:bg-green-700 text-white' 
+                : 'bg-brand-accent hover:bg-brand-accentHover text-white';
+            
+            const btnText = beat.isFree ? 'Free Download' : `Buy $${beat.price}`;
+            const btnAction = beat.isFree 
+                ? `downloadBeat('${beat.title}')` 
+                : `buyBeat('${beat.title}', ${beat.price})`;
+
+            return `
+                <div class="bg-brand-card rounded-xl overflow-hidden border border-white/5 hover:border-brand-accent/30 transition-all duration-300 group">
+                    <div class="relative aspect-square overflow-hidden">
+                        <img src="${beat.cover}" alt="${beat.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <button onclick="playBeat(${beat.id})" class="h-14 w-14 bg-white rounded-full flex items-center justify-center text-brand-dark hover:scale-110 transition-transform shadow-lg">
+                                <i class="fas fa-play ml-1 text-xl"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <h3 class="text-lg font-bold text-white">${beat.title}</h3>
+                                <p class="text-sm text-brand-muted">${beat.genre} • ${beat.bpm} BPM</p>
+                            </div>
+                            <span class="text-xs font-mono bg-white/10 px-2 py-1 rounded text-brand-muted">${beat.key}</span>
+                        </div>
+                        <div class="mt-4 flex gap-2">
+                            <button onclick="${btnAction}" class="flex-1 py-2 rounded-lg font-medium text-sm transition-colors ${btnClass}">
+                                ${btnText}
+                            </button>
+                            <button class="px-3 py-2 rounded-lg border border-white/10 text-brand-muted hover:text-white hover:bg-white/5 transition-colors">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function playBeat(id) {
+            const beat = beats.find(b => b.id === id);
+            currentBeat = beat;
+            
+            document.getElementById('player-cover').src = beat.cover;
+            document.getElementById('player-title').innerText = beat.title;
+            
+            const actionBtn = document.getElementById('player-action-btn');
+            if (beat.isFree) {
+                actionBtn.innerText = "Download Free";
+                actionBtn.onclick = () => downloadBeat(beat.title);
+                actionBtn.className = "px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-bold rounded-full transition-colors";
+            } else {
+                actionBtn.innerText = `Buy $${beat.price}`;
+                actionBtn.onclick = () => buyBeat(beat.title, beat.price);
+                actionBtn.className = "px-4 py-2 bg-brand-accent hover:bg-brand-accentHover text-white text-sm font-bold rounded-full transition-colors";
+            }
+
+            const player = document.getElementById('audio-player');
+            player.classList.remove('translate-y-full');
+            
+            isPlaying = true;
+            updatePlayButton();
+        }
+
+        function togglePlay() {
+            if (!currentBeat) return;
+            isPlaying = !isPlaying;
+            updatePlayButton();
+        }
+
+        function updatePlayButton() {
+            const btn = document.getElementById('play-pause-btn');
+            if (isPlaying) {
+                btn.innerHTML = '<i class="fas fa-pause"></i>';
+            } else {
+                btn.innerHTML = '<i class="fas fa-play ml-1"></i>';
+            }
+        }
+
+        function buyBeat(title, price) {
+            alert(`Redirecting to checkout for "${title}"...\nPrice: $${price}`);
+        }
+
+        function downloadBeat(title) {
+            alert(`Starting download for "${title}"...\nThank you for downloading!`);
+        }
+
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.innerText;
+            
+            btn.innerText = "Sending...";
+            btn.disabled = true;
+            btn.classList.add('opacity-75');
+
+            setTimeout(() => {
+                alert("Message sent successfully! Liamliterally will get back to you soon.");
+                e.target.reset();
+                btn.innerText = originalText;
+                btn.disabled = false;
+                btn.classList.remove('opacity-75');
+            }, 1500);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderBeats();
+        });
+    </script>
+</body>
+</html>
+```
