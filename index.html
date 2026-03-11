@@ -1,988 +1,1408 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liamliterally | Premium Beats & Instrumentals</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            dark: '#0f0f13',
-                            card: '#1a1a24',
-                            accent: '#8b5cf6',
-                            accentHover: '#7c3aed',
-                            text: '#e2e8f0',
-                            muted: '#94a3b8'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0f0f13;
-            color: #e2e8f0;
-            overflow-x: hidden;
-        }
-
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #1a1a24;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #4b5563;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #8b5cf6;
-        }
-
-        .section-hidden {
-            display: none;
-            opacity: 0;
-        }
-        .section-visible {
-            display: block;
-            opacity: 1;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .gradient-text {
-            background: linear-gradient(to right, #c084fc, #6366f1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* Soundwave Visualizer */
-        .soundwave-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 3px;
-            height: 60px;
-        }
-        .soundwave-bar {
-            width: 4px;
-            background: linear-gradient(to top, #8b5cf6, #c084fc);
-            border-radius: 2px;
-            animation: soundwave 0.8s ease-in-out infinite;
-        }
-        @keyframes soundwave {
-            0%, 100% { height: 8px; }
-            50% { height: 40px; }
-        }
-        .soundwave-bar:nth-child(1) { animation-delay: 0s; }
-        .soundwave-bar:nth-child(2) { animation-delay: 0.1s; }
-        .soundwave-bar:nth-child(3) { animation-delay: 0.2s; }
-        .soundwave-bar:nth-child(4) { animation-delay: 0.3s; }
-        .soundwave-bar:nth-child(5) { animation-delay: 0.4s; }
-        .soundwave-bar:nth-child(6) { animation-delay: 0.5s; }
-        .soundwave-bar:nth-child(7) { animation-delay: 0.6s; }
-        .soundwave-bar:nth-child(8) { animation-delay: 0.7s; }
-        .soundwave-bar:nth-child(9) { animation-delay: 0.8s; }
-        .soundwave-bar:nth-child(10) { animation-delay: 0.9s; }
-        .soundwave-bar:nth-child(11) { animation-delay: 1s; }
-        .soundwave-bar:nth-child(12) { animation-delay: 1.1s; }
-        .soundwave-bar:nth-child(13) { animation-delay: 1.2s; }
-        .soundwave-bar:nth-child(14) { animation-delay: 1.3s; }
-        .soundwave-bar:nth-child(15) { animation-delay: 1.4s; }
-        .soundwave-bar:nth-child(16) { animation-delay: 1.5s; }
-        .soundwave-bar:nth-child(17) { animation-delay: 1.6s; }
-        .soundwave-bar:nth-child(18) { animation-delay: 1.7s; }
-        .soundwave-bar:nth-child(19) { animation-delay: 1.8s; }
-        .soundwave-bar:nth-child(20) { animation-delay: 1.9s; }
-
-        .soundwave-paused .soundwave-bar {
-            animation-play-state: paused;
-            height: 8px;
-        }
-
-        /* Progress Bar */
-        .progress-container {
-            width: 100%;
-            height: 6px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 3px;
-            cursor: pointer;
-            position: relative;
-        }
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(to right, #8b5cf6, #c084fc);
-            border-radius: 3px;
-            width: 0%;
-            transition: width 0.1s linear;
-        }
-        .progress-container:hover .progress-bar {
-            background: linear-gradient(to right, #7c3aed, #a78bfa);
-        }
-
-        /* Beat Detail Page */
-        .beat-detail-cover {
-            box-shadow: 0 25px 50px -12px rgba(139, 92, 246, 0.25);
-        }
-
-        /* Modal Styles */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.8);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 100;
-        }
-        .modal-overlay.active {
-            display: flex;
-        }
-        .modal-content {
-            background: #1a1a24;
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 16px;
-            padding: 32px;
-            max-width: 500px;
-            width: 90%;
-            animation: modalSlide 0.3s ease-out;
-        }
-        @keyframes modalSlide {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Liamliterally | Premium Beats & Instrumentals</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+tailwind.config = {
+theme: {
+extend: {
+colors: {
+brand: {
+dark: '#0f0f13',
+card: '#1a1a24',
+accent: '#8b5cf6',
+accentHover: '#7c3aed',
+text: '#e2e8f0',
+muted: '#94a3b8'
+}
+},
+fontFamily: {
+sans: ['Inter', 'sans-serif'],
+}
+}
+}
+}
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+body {
+font-family: 'Inter', sans-serif;
+background-color: #0f0f13;
+color: #e2e8f0;
+overflow-x: hidden;
+}
+::-webkit-scrollbar {
+width: 8px;
+}
+::-webkit-scrollbar-track {
+background: #1a1a24;
+}
+::-webkit-scrollbar-thumb {
+background: #4b5563;
+border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+background: #8b5cf6;
+}
+.section-hidden {
+display: none;
+opacity: 0;
+}
+.section-visible {
+display: block;
+opacity: 1;
+animation: fadeIn 0.5s ease-in-out;
+}
+@keyframes fadeIn {
+from { opacity: 0; transform: translateY(10px); }
+to { opacity: 1; transform: translateY(0); }
+}
+.gradient-text {
+background: linear-gradient(to right, #c084fc, #6366f1);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+}
+/* Soundwave Visualizer */
+.soundwave-container {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 3px;
+height: 60px;
+}
+.soundwave-bar {
+width: 4px;
+background: linear-gradient(to top, #8b5cf6, #c084fc);
+border-radius: 2px;
+animation: soundwave 0.8s ease-in-out infinite;
+}
+@keyframes soundwave {
+0%, 100% { height: 8px; }
+50% { height: 40px; }
+}
+.soundwave-bar:nth-child(1) { animation-delay: 0s; }
+.soundwave-bar:nth-child(2) { animation-delay: 0.1s; }
+.soundwave-bar:nth-child(3) { animation-delay: 0.2s; }
+.soundwave-bar:nth-child(4) { animation-delay: 0.3s; }
+.soundwave-bar:nth-child(5) { animation-delay: 0.4s; }
+.soundwave-bar:nth-child(6) { animation-delay: 0.5s; }
+.soundwave-bar:nth-child(7) { animation-delay: 0.6s; }
+.soundwave-bar:nth-child(8) { animation-delay: 0.7s; }
+.soundwave-bar:nth-child(9) { animation-delay: 0.8s; }
+.soundwave-bar:nth-child(10) { animation-delay: 0.9s; }
+.soundwave-bar:nth-child(11) { animation-delay: 1s; }
+.soundwave-bar:nth-child(12) { animation-delay: 1.1s; }
+.soundwave-bar:nth-child(13) { animation-delay: 1.2s; }
+.soundwave-bar:nth-child(14) { animation-delay: 1.3s; }
+.soundwave-bar:nth-child(15) { animation-delay: 1.4s; }
+.soundwave-bar:nth-child(16) { animation-delay: 1.5s; }
+.soundwave-bar:nth-child(17) { animation-delay: 1.6s; }
+.soundwave-bar:nth-child(18) { animation-delay: 1.7s; }
+.soundwave-bar:nth-child(19) { animation-delay: 1.8s; }
+.soundwave-bar:nth-child(20) { animation-delay: 1.9s; }
+.soundwave-paused .soundwave-bar {
+animation-play-state: paused;
+height: 8px;
+}
+/* Progress Bar */
+.progress-container {
+width: 100%;
+height: 6px;
+background: rgba(255,255,255,0.1);
+border-radius: 3px;
+cursor: pointer;
+position: relative;
+}
+.progress-bar {
+height: 100%;
+background: linear-gradient(to right, #8b5cf6, #c084fc);
+border-radius: 3px;
+width: 0%;
+transition: width 0.1s linear;
+}
+.progress-container:hover .progress-bar {
+background: linear-gradient(to right, #7c3aed, #a78bfa);
+}
+/* Beat Detail Page */
+.beat-detail-cover {
+box-shadow: 0 25px 50px -12px rgba(139, 92, 246, 0.25);
+}
+/* Modal Styles */
+.modal-overlay {
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background: rgba(0,0,0,0.8);
+display: none;
+align-items: center;
+justify-content: center;
+z-index: 100;
+}
+.modal-overlay.active {
+display: flex;
+}
+.modal-content {
+background: #1a1a24;
+border: 1px solid rgba(255,255,255,0.1);
+border-radius: 16px;
+padding: 32px;
+max-width: 500px;
+width: 90%;
+animation: modalSlide 0.3s ease-out;
+}
+@keyframes modalSlide {
+from { opacity: 0; transform: translateY(-20px); }
+to { opacity: 1; transform: translateY(0); }
+}
+/* Payment Page Styles */
+.payment-method-card {
+border: 2px solid rgba(255,255,255,0.1);
+transition: all 0.3s ease;
+}
+.payment-method-card.selected {
+border-color: #8b5cf6;
+background: rgba(139, 92, 246, 0.1);
+}
+.payment-method-card:hover {
+border-color: #8b5cf6;
+}
+.checkout-step {
+display: none;
+}
+.checkout-step.active {
+display: block;
+animation: fadeIn 0.4s ease-out;
+}
+/* Loading Spinner */
+.spinner {
+border: 3px solid rgba(255,255,255,0.1);
+border-top: 3px solid #8b5cf6;
+border-radius: 50%;
+width: 40px;
+height: 40px;
+animation: spin 1s linear infinite;
+}
+@keyframes spin {
+0% { transform: rotate(0deg); }
+100% { transform: rotate(360deg); }
+}
+/* Success Animation */
+.success-checkmark {
+width: 80px;
+height: 80px;
+margin: 0 auto 20px;
+}
+.success-checkmark .check-icon {
+width: 80px;
+height: 80px;
+position: relative;
+border-radius: 50%;
+box-sizing: content-box;
+border: 4px solid #22c55e;
+}
+.success-checkmark .check-icon::before {
+top: 3px;
+left: -2px;
+width: 30px;
+transform-origin: 100% 50%;
+border-radius: 100px 0 0 100px;
+}
+.success-checkmark .check-icon::after {
+top: 0;
+left: 30px;
+width: 60px;
+transform-origin: 0 50%;
+border-radius: 0 100px 100px 0;
+animation: rotate-circle 4.25s ease-in;
+}
+.success-checkmark .check-icon::before,
+.success-checkmark .check-icon::after {
+content: '';
+height: 4px;
+position: absolute;
+background: #22c55e;
+transform: rotate(-45deg);
+}
+.success-checkmark .check-icon::before {
+animation: rotate-line 1s ease-in;
+}
+@keyframes rotate-circle {
+0% { transform: rotate(-45deg); }
+100% { transform: rotate(-45deg); }
+}
+@keyframes rotate-line {
+0% { width: 0; }
+50% { width: 30px; }
+100% { width: 30px; }
+}
+</style>
 </head>
 <body class="flex flex-col min-h-screen">
-
-    <nav class="fixed w-full z-50 bg-brand-dark/90 backdrop-blur-md border-b border-white/10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex-shrink-0 cursor-pointer" onclick="navigateTo('home')">
-                    <span class="text-2xl font-bold tracking-tighter text-white">LIAM<span class="text-brand-accent">LITERALLY</span></span>
-                </div>
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-4">
-                        <button onclick="navigateTo('home')" class="hover:text-brand-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</button>
-                        <button onclick="navigateTo('catalog')" class="hover:text-brand-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Catalog</button>
-                        <button onclick="navigateTo('licensing')" class="hover:text-brand-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Licensing</button>
-                        <button onclick="navigateTo('contact')" class="bg-brand-accent hover:bg-brand-accentHover text-white px-4 py-2 rounded-full text-sm font-medium transition-all shadow-lg shadow-brand-accent/20">Custom Beats</button>
-                    </div>
-                </div>
-                <div class="-mr-2 flex md:hidden">
-                    <button onclick="toggleMobileMenu()" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div id="mobile-menu" class="hidden md:hidden bg-brand-card border-b border-white/10">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <button onclick="navigateTo('home'); toggleMobileMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">Home</button>
-                <button onclick="navigateTo('catalog'); toggleMobileMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">Catalog</button>
-                <button onclick="navigateTo('licensing'); toggleMobileMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">Licensing</button>
-                <button onclick="navigateTo('contact'); toggleMobileMenu()" class="text-brand-accent font-bold block px-3 py-2 rounded-md text-base w-full text-left">Custom Beats</button>
-            </div>
-        </div>
-    </nav>
-
-    <main class="flex-grow pt-16">
-        
-        <section id="home" class="section-visible">
-            <div class="relative bg-brand-card overflow-hidden">
-                <div class="absolute inset-0">
-                    <img class="w-full h-full object-cover opacity-20" src="https://image.qwenlm.ai/public_source/c9d056b1-1b7f-4981-99e9-dd32526f83ec/1629ddd59-d5a6-47d9-8f62-9ffac1caab88.png" alt="Studio Background">
-                    <div class="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/80 to-transparent"></div>
-                </div>
-                <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 flex flex-col items-center text-center">
-                    <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-white mb-6">
-                        Liamliterally <br> <span class="gradient-text">Premium Instrumentals</span>
-                    </h1>
-                    <p class="mt-4 max-w-2xl text-xl text-brand-muted mb-10">
-                        High-quality beats by <strong>Liamliterally</strong>. Instant download.
-                    </p>
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <button onclick="navigateTo('catalog')" class="px-8 py-4 bg-brand-accent hover:bg-brand-accentHover text-white font-bold rounded-full text-lg transition-all shadow-lg shadow-brand-accent/30 transform hover:-translate-y-1">
-                            Browse Catalog
-                        </button>
-                        <button onclick="navigateTo('licensing')" class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-full text-lg transition-all backdrop-blur-sm border border-white/10">
-                            View Licenses
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                <div class="flex justify-between items-end mb-8">
-                    <h2 class="text-3xl font-bold text-white">Trending Now</h2>
-                    <button onclick="navigateTo('catalog')" class="text-brand-accent hover:text-white font-medium transition-colors">View All <i class="fas fa-arrow-right ml-1"></i></button>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="featured-beats-container"></div>
-            </div>
-        </section>
-
-        <section id="catalog" class="section-hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Beat Catalog</h2>
-                <p class="text-brand-muted">Browse the latest collection from Liamliterally.</p>
-                
-                <div class="mt-8 flex flex-col md:flex-row gap-4 justify-center">
-                    <div class="relative w-full md:w-96">
-                        <input type="text" id="search-input" placeholder="Search beats..." onkeyup="filterBeats()" class="w-full bg-brand-card border border-white/10 rounded-full py-3 px-6 text-white focus:outline-none focus:border-brand-accent transition-colors">
-                        <i class="fas fa-search absolute right-4 top-3.5 text-gray-500"></i>
-                    </div>
-                    <select id="genre-filter" onchange="filterBeats()" class="bg-brand-card border border-white/10 rounded-full py-3 px-6 text-white focus:outline-none focus:border-brand-accent cursor-pointer">
-                        <option value="">All Genres</option>
-                        <option value="Trap">Trap</option>
-                        <option value="Lo-Fi">Lo-Fi</option>
-                        <option value="Drill">Drill</option>
-                        <option value="R&B">R&B</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="full-catalog-container"></div>
-        </section>
-
-        <section id="beat-detail" class="section-hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <button onclick="navigateTo('catalog')" class="mb-6 text-brand-muted hover:text-white transition-colors flex items-center gap-2">
-                <i class="fas fa-arrow-left"></i> Back to Catalog
-            </button>
-            
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                <div class="flex flex-col items-center">
-                    <img id="detail-cover" src="" alt="Beat Cover" class="w-full max-w-md aspect-square object-cover rounded-2xl beat-detail-cover mb-6">
-                    
-                    <div class="w-full max-w-md bg-brand-card rounded-2xl p-6 border border-white/5">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-lg font-bold text-white">Preview</h3>
-                            <span id="detail-timer" class="text-brand-muted text-sm">0:00 / 0:00</span>
-                        </div>
-                        
-                        <div class="soundwave-container mb-4 soundwave-paused" id="detail-soundwave">
-                            <div class="soundwave-bar"></div><div class="soundwave-bar"></div><div class="soundwave-bar"></div>
-                            <div class="soundwave-bar"></div><div class="soundwave-bar"></div><div class="soundwave-bar"></div>
-                            <div class="soundwave-bar"></div><div class="soundwave-bar"></div><div class="soundwave-bar"></div>
-                            <div class="soundwave-bar"></div><div class="soundwave-bar"></div><div class="soundwave-bar"></div>
-                            <div class="soundwave-bar"></div><div class="soundwave-bar"></div><div class="soundwave-bar"></div>
-                            <div class="soundwave-bar"></div><div class="soundwave-bar"></div><div class="soundwave-bar"></div>
-                            <div class="soundwave-bar"></div><div class="soundwave-bar"></div>
-                        </div>
-                        
-                        <div class="progress-container mb-4" id="detail-progress" onclick="seekAudio(event)">
-                            <div class="progress-bar" id="detail-progress-bar"></div>
-                        </div>
-                        
-                        <div class="flex items-center justify-center gap-6">
-                            <button onclick="skip(-5)" class="text-brand-muted hover:text-white transition-colors">
-                                <i class="fas fa-rotate-left"></i> -5s
-                            </button>
-                            <button id="detail-play-btn" onclick="toggleDetailPlay()" class="h-16 w-16 rounded-full bg-brand-accent hover:bg-brand-accentHover text-white flex items-center justify-center transition-all shadow-lg shadow-brand-accent/30">
-                                <i class="fas fa-play text-2xl ml-1"></i>
-                            </button>
-                            <button onclick="skip(5)" class="text-brand-muted hover:text-white transition-colors">
-                                <i class="fas fa-rotate-right"></i> +5s
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <h1 id="detail-title" class="text-4xl font-bold text-white mb-2"></h1>
-                    <p id="detail-artist" class="text-brand-accent text-lg mb-6">Prod. by Liamliterally</p>
-                    
-                    <div class="flex flex-wrap gap-4 mb-8">
-                        <span id="detail-genre" class="px-4 py-2 bg-white/5 rounded-full text-sm text-brand-muted border border-white/10"></span>
-                        <span id="detail-bpm" class="px-4 py-2 bg-white/5 rounded-full text-sm text-brand-muted border border-white/10"></span>
-                        <span id="detail-key" class="px-4 py-2 bg-white/5 rounded-full text-sm text-brand-muted border border-white/10"></span>
-                    </div>
-
-                    <div class="bg-brand-card rounded-2xl p-6 border border-white/5 mb-8">
-                        <h3 class="text-xl font-bold text-white mb-4">Purchase Options</h3>
-                        
-                        <!-- FREE DOWNLOAD OPTION -->
-                        <div id="detail-free-option" class="hidden mb-4 p-4 bg-green-600/20 border border-green-600/50 rounded-xl">
-                            <div class="flex items-center justify-between mb-3">
-                                <div>
-                                    <h4 class="font-bold text-white flex items-center gap-2">
-                                        <i class="fas fa-gift text-green-500"></i> Free Download
-                                    </h4>
-                                    <p class="text-sm text-brand-muted">MP3 • Non-Exclusive • Tagged</p>
-                                </div>
-                                <button onclick="showFreeDownloadModal()" class="px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition-colors">
-                                    <i class="fas fa-download mr-2"></i>Download
-                                </button>
-                            </div>
-                            <div class="bg-brand-dark/50 rounded-lg p-3 text-xs text-brand-muted border border-white/5">
-                                <i class="fas fa-info-circle text-brand-accent mr-2"></i>
-                                <strong>Requirements:</strong> You must credit "Prod. Liamliterally" in both the title and description of your project.
-                            </div>
-                        </div>
-
-                        <div class="space-y-4">
-                            <div class="p-4 bg-white/5 border border-white/10 rounded-xl hover:border-brand-accent/50 transition-colors">
-                                <div class="flex items-center justify-between">
-                                    <div>
-                                        <h4 class="font-bold text-white">Basic Lease</h4>
-                                        <p class="text-sm text-brand-muted">MP3 • 50K Streams • 1 Video</p>
-                                    </div>
-                                    <button onclick="buyBeat('basic')" class="px-6 py-3 bg-brand-accent hover:bg-brand-accentHover text-white font-bold rounded-lg transition-colors">
-                                        $29.99
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="p-4 bg-white/5 border border-white/10 rounded-xl hover:border-brand-accent/50 transition-colors">
-                                <div class="flex items-center justify-between">
-                                    <div>
-                                        <h4 class="font-bold text-white">Premium Lease</h4>
-                                        <p class="text-sm text-brand-muted">MP3 + WAV • 500K Streams • Unlimited Videos</p>
-                                    </div>
-                                    <button onclick="buyBeat('premium')" class="px-6 py-3 bg-brand-accent hover:bg-brand-accentHover text-white font-bold rounded-lg transition-colors">
-                                        $79.99
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="p-4 bg-white/5 border border-white/10 rounded-xl hover:border-brand-accent/50 transition-colors">
-                                <div class="flex items-center justify-between">
-                                    <div>
-                                        <h4 class="font-bold text-white">Unlimited Lease</h4>
-                                        <p class="text-sm text-brand-muted">MP3 + WAV + Stems • Unlimited • Full Rights</p>
-                                    </div>
-                                    <button onclick="buyBeat('unlimited')" class="px-6 py-3 bg-brand-accent hover:bg-brand-accentHover text-white font-bold rounded-lg transition-colors">
-                                        $199.99
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="p-4 bg-gradient-to-r from-brand-accent/20 to-brand-accent/5 border border-brand-accent/30 rounded-xl hover:border-brand-accent/50 transition-colors">
-                                <div class="flex items-center justify-between">
-                                    <div>
-                                        <h4 class="font-bold text-white flex items-center gap-2">
-                                            <i class="fas fa-crown text-yellow-500"></i> Exclusive Rights
-                                        </h4>
-                                        <p class="text-sm text-brand-muted">Full Ownership • All Files • Contact for Price</p>
-                                    </div>
-                                    <button onclick="navigateTo('contact')" class="px-6 py-3 bg-white text-brand-dark font-bold rounded-lg transition-colors hover:bg-brand-accent hover:text-white">
-                                        Contact
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Free Download Requirements Info -->
-                        <div class="mt-6 p-4 bg-brand-dark/50 rounded-xl border border-white/5">
-                            <h4 class="font-bold text-white mb-3 flex items-center gap-2">
-                                <i class="fas fa-clipboard-list text-brand-accent"></i>
-                                Free Download License Terms
-                            </h4>
-                            <ul class="space-y-2 text-sm text-brand-muted">
-                                <li class="flex items-start gap-2">
-                                    <i class="fas fa-check text-green-500 mt-1 flex-shrink-0"></i>
-                                    <span><strong>Title Credit:</strong> Include "Prod. Liamliterally" in your song title (e.g., "My Song (Prod. Liamliterally)")</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <i class="fas fa-check text-green-500 mt-1 flex-shrink-0"></i>
-                                    <span><strong>Description Credit:</strong> Include "Prod. Liamliterally" in your video/streaming description</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <i class="fas fa-check text-green-500 mt-1 flex-shrink-0"></i>
-                                    <span><strong>Non-Commercial Use:</strong> Free beats are for non-commercial use only (under 10,000 streams)</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <i class="fas fa-check text-green-500 mt-1 flex-shrink-0"></i>
-                                    <span><strong>Non-Exclusive:</strong> Other artists may also use this beat</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="bg-brand-card/50 rounded-xl p-6 border border-white/5">
-                        <h3 class="text-lg font-bold text-white mb-4">License Information</h3>
-                        <ul class="space-y-2 text-brand-muted text-sm">
-                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Instant Download After Purchase</li>
-                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>High Quality Audio Files</li>
-                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Use on All Streaming Platforms</li>
-                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Credit: "Prod. by Liamliterally"</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="licensing" class="section-hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Licensing & Usage Rights</h2>
-                <p class="text-brand-muted max-w-2xl mx-auto">Choose the license that fits your project. All leases include high-quality MP3/WAV files. Exclusive rights available upon request.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-brand-card rounded-2xl p-8 border border-white/5 hover:border-brand-accent/50 transition-all duration-300">
-                    <h3 class="text-xl font-bold text-white mb-2">Basic Lease</h3>
-                    <div class="text-3xl font-bold text-brand-accent mb-6">$29.99</div>
-                    <ul class="space-y-4 mb-8 text-brand-muted">
-                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> MP3 File</li>
-                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Up to 50,000 Streams</li>
-                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Non-Exclusive</li>
-                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> 1 Music Video</li>
-                    </ul>
-                    <button class="w-full py-3 rounded-lg border border-white/20 hover:bg-white/5 text-white font-medium transition-colors">Select Plan</button>
-                </div>
-
-                <div class="bg-brand-card rounded-2xl p-8 border-2 border-brand-accent relative transform md:-translate-y-4 shadow-2xl shadow-brand-accent/10">
-                    <div class="absolute top-0 right-0 bg-brand-accent text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">POPULAR</div>
-                    <h3 class="text-xl font-bold text-white mb-2">Premium Lease</h3>
-                    <div class="text-3xl font-bold text-brand-accent mb-6">$79.99</div>
-                    <ul class="space-y-4 mb-8 text-brand-muted">
-                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> MP3 + WAV Files</li>
-                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Up to 500,000 Streams</li>
-                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Non-Exclusive</li>
-                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Unlimited Music Videos</li>
-                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Radio Play</li>
-                    </ul>
-                    <button class="w-full py-3 rounded-lg bg-brand-accent hover:bg-brand-accentHover text-white font-medium transition-colors shadow-lg">Select Plan</button>
-                </div>
-
-                <div class="bg-brand-card rounded-2xl p-8 border border-white/5 hover:border-brand-accent/50 transition-all duration-300">
-                    <h3 class="text-xl font-bold text-white mb-2">Unlimited Lease</h3>
-                    <div class="text-3xl font-bold text-brand-accent mb-6">$199.99</div>
-                    <ul class="space-y-4 mb-8 text-brand-muted">
-                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> MP3 + WAV + Stems</li>
-                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Unlimited Streams</li>
-                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Non-Exclusive</li>
-                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Broadcast Rights</li>
-                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Full Control</li>
-                    </ul>
-                    <button class="w-full py-3 rounded-lg border border-white/20 hover:bg-white/5 text-white font-medium transition-colors">Select Plan</button>
-                </div>
-            </div>
-
-            <div class="mt-16 bg-brand-card/50 rounded-xl p-8 border border-white/5">
-                <h3 class="text-2xl font-bold text-white mb-4">Frequently Asked Questions</h3>
-                <div class="space-y-4">
-                    <details class="group">
-                        <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-white">
-                            <span>Do I get the trackouts/stems?</span>
-                            <span class="transition group-open:rotate-180"><i class="fas fa-chevron-down"></i></span>
-                        </summary>
-                        <div class="text-brand-muted mt-3 group-open:animate-fadeIn">
-                            Stems (trackouts) are only included with the Unlimited Lease or Exclusive rights purchase.
-                        </div>
-                    </details>
-                    <div class="h-px bg-white/10"></div>
-                    <details class="group">
-                        <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-white">
-                            <span>Can I use the beat for YouTube?</span>
-                            <span class="transition group-open:rotate-180"><i class="fas fa-chevron-down"></i></span>
-                        </summary>
-                        <div class="text-brand-muted mt-3 group-open:animate-fadeIn">
-                            Yes! All licenses allow for YouTube usage. Just make sure to credit "Prod. by Liamliterally" in the description.
-                        </div>
-                    </details>
-                    <div class="h-px bg-white/10"></div>
-                    <details class="group">
-                        <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-white">
-                            <span>What are the free download requirements?</span>
-                            <span class="transition group-open:rotate-180"><i class="fas fa-chevron-down"></i></span>
-                        </summary>
-                        <div class="text-brand-muted mt-3 group-open:animate-fadeIn">
-                            Free downloads require you to credit "Prod. Liamliterally" in both your song title and description. Free beats are for non-commercial use only (under 10,000 streams).
-                        </div>
-                    </details>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact" class="section-hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                <div>
-                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Need a Custom Beat?</h2>
-                    <p class="text-brand-muted text-lg mb-8">
-                        Looking for something unique? I offer custom beat production services tailored to your specific style and vision. Let's create a hit together.
-                    </p>
-                    
-                    <div class="space-y-6">
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 h-12 w-12 rounded-lg bg-brand-accent/20 flex items-center justify-center text-brand-accent">
-                                <i class="fas fa-music text-xl"></i>
-                            </div>
-                            <div class="ml-4">
-                                <h4 class="text-lg font-bold text-white">Exclusive Rights</h4>
-                                <p class="text-brand-muted mt-1">Full ownership of the beat. You own the master recording.</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 h-12 w-12 rounded-lg bg-brand-accent/20 flex items-center justify-center text-brand-accent">
-                                <i class="fas fa-sliders-h text-xl"></i>
-                            </div>
-                            <div class="ml-4">
-                                <h4 class="text-lg font-bold text-white">Custom Mixing</h4>
-                                <p class="text-brand-muted mt-1">I can mix and master your vocals on top of the beat.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-12 pt-8 border-t border-white/10">
-                        <h4 class="text-white font-bold mb-4">Contact Info</h4>
-                        <div class="space-y-2 text-brand-muted">
-                            <p><i class="fas fa-envelope w-6"></i> @liamliterally.com</p>
-                            <p><i class="fab fa-instagram w-6"></i> @liamliterally_</p>
-                            <p><i class="fab fa-youtube w-6"></i> @LiamLiterallyWasTaken</p>
-                            <p><i class="fab fa-tiktok w-6"></i> @liamliterally_</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-brand-card p-8 rounded-2xl border border-white/5 shadow-xl">
-                    <form onsubmit="handleContactSubmit(event)">
-                        <div class="grid grid-cols-1 gap-6">
-                            <div>
-                                <label class="block text-sm font-medium text-brand-muted mb-2">Name</label>
-                                <input type="text" required class="w-full bg-brand-dark border border-white/10 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-brand-accent transition-colors">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-brand-muted mb-2">Email</label>
-                                <input type="email" required class="w-full bg-brand-dark border border-white/10 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-brand-accent transition-colors">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-brand-muted mb-2">Project Type</label>
-                                <select class="w-full bg-brand-dark border border-white/10 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-brand-accent transition-colors">
-                                    <option>Custom Beat Production</option>
-                                    <option>Exclusive Rights Inquiry</option>
-                                    <option>Mixing/Mastering</option>
-                                    <option>Other</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-brand-muted mb-2">Message / Reference Links</label>
-                                <textarea rows="4" required class="w-full bg-brand-dark border border-white/10 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-brand-accent transition-colors"></textarea>
-                            </div>
-                            <button type="submit" class="w-full bg-brand-accent hover:bg-brand-accentHover text-white font-bold py-4 rounded-lg transition-all shadow-lg shadow-brand-accent/20">
-                                Send Request
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <footer class="bg-brand-card border-t border-white/10 pt-12 pb-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-                <div class="col-span-1 md:col-span-2">
-                    <span class="text-2xl font-bold tracking-tighter text-white">LIAM<span class="text-brand-accent">LITERALLY</span></span>
-                    <p class="mt-4 text-brand-muted max-w-sm">
-                        Providing high-quality instrumentals for artists worldwide. Join the community and start creating today.
-                    </p>
-                </div>
-                <div>
-                    <h4 class="text-white font-bold mb-4">Quick Links</h4>
-                    <ul class="space-y-2 text-brand-muted">
-                        <li><button onclick="navigateTo('home')" class="hover:text-brand-accent transition-colors">Home</button></li>
-                        <li><button onclick="navigateTo('catalog')" class="hover:text-brand-accent transition-colors">Catalog</button></li>
-                        <li><button onclick="navigateTo('licensing')" class="hover:text-brand-accent transition-colors">Licensing</button></li>
-                        <li><button onclick="navigateTo('contact')" class="hover:text-brand-accent transition-colors">Contact</button></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-white font-bold mb-4">Connect</h4>
-                    <div class="flex space-x-4">
-                        <a href="https://www.youtube.com/@LiamLiterallyWasTaken" target="_blank" class="h-10 w-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-red-600 transition-all">
-                            <i class="fab fa-youtube"></i>
-                        </a>
-                        <a href="https://instagram.com/liamliterally_" target="_blank" class="h-10 w-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-pink-600 transition-all">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="https://tiktok.com/@liamliterally_" target="_blank" class="h-10 w-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-black transition-all border border-white/20">
-                            <i class="fab fa-tiktok"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-brand-muted text-sm">&copy; 2026 Liamliterally. All rights reserved.</p>
-                <div class="flex space-x-6 mt-4 md:mt-0 text-sm text-brand-muted">
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Free Download Modal -->
-    <div class="modal-overlay" id="free-download-modal" onclick="closeFreeDownloadModal(event)">
-        <div class="modal-content">
-            <div class="flex items-center justify-between mb-6">
-                <h3 class="text-xl font-bold text-white flex items-center gap-2">
-                    <i class="fas fa-gift text-green-500"></i> Free Download
-                </h3>
-                <button onclick="closeFreeDownloadModalDirect()" class="text-brand-muted hover:text-white transition-colors">
-                    <i class="fas fa-times text-xl"></i>
-                </button>
-            </div>
-            
-            <div class="bg-brand-dark/50 rounded-xl p-4 mb-6 border border-white/5">
-                <p class="text-white font-bold mb-3">⚠️ License Agreement</p>
-                <p class="text-brand-muted text-sm mb-4">By downloading this beat for free, you agree to the following terms:</p>
-                <ul class="space-y-2 text-sm text-brand-muted">
-                    <li class="flex items-start gap-2">
-                        <i class="fas fa-check text-green-500 mt-1 flex-shrink-0"></i>
-                        <span>Include <strong>"Prod. Liamliterally"</strong> in your song title</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <i class="fas fa-check text-green-500 mt-1 flex-shrink-0"></i>
-                        <span>Include <strong>"Prod. Liamliterally"</strong> in your description</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <i class="fas fa-check text-green-500 mt-1 flex-shrink-0"></i>
-                        <span>Non-commercial use only (under 10,000 streams)</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <i class="fas fa-check text-green-500 mt-1 flex-shrink-0"></i>
-                        <span>Non-exclusive license (others may use this beat)</span>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="flex gap-3">
-                <button onclick="closeFreeDownloadModalDirect()" class="flex-1 py-3 rounded-lg border border-white/20 hover:bg-white/5 text-white font-medium transition-colors">
-                    Cancel
-                </button>
-                <button onclick="confirmFreeDownload()" class="flex-1 py-3 rounded-lg bg-green-600 hover:bg-green-700 text-white font-bold transition-colors">
-                    <i class="fas fa-download mr-2"></i>I Agree & Download
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Hidden Audio Element -->
-    <audio id="audio-element" preload="auto"></audio>
-
-    <script>
-        /*
-        ================================================================
-        AUDIO FILES SETUP INSTRUCTIONS
-        ================================================================
-        
-        To add your own audio files:
-        
-        1. Create a folder called "audios" in the same directory as this HTML file
-        
-        2. Place your beat audio files in the "audios" folder
-           Example structure:
-           /your-website/
-           ├── index.html (this file)
-           └── audios/
-               ├── neon-nights.mp3
-               ├── rainy-study.mp3
-               ├── street-code.mp3
-               ├── midnight-drive.mp3
-               ├── golden-hour.mp3
-               └── coffee-shop.mp3
-        
-        3. Update the "audio" property in the beats array below to match your file names
-           Example: audio: "audios/neon-nights.mp3"
-        
-        4. For free downloads, you can also specify a separate download file if needed
-           Example: downloadFile: "audios/neon-nights-free.mp3"
-        
-        ================================================================
-        */
-
-        const beats = [
-            {
-                id: 1,
-                title: "SILENT HILL",
-                genre: "HoodTrap",
-                bpm: 144,
-                key: "C♯ minor",
-                price: 29.99,
-                isFree: false,
-                cover: "png/maxresdefault.jpg",
-                audio: "audio/SilentHill (1).wav",
-                downloadFile: "audio/SilentHill (1).wav",
-                duration: 180
-            },
-            
-        ];
-
-        let currentBeat = null;
-        let isPlaying = false;
-        let audioElement = document.getElementById('audio-element');
-        let updateInterval = null;
-
-        function navigateTo(sectionId) {
-            document.querySelectorAll('main > section').forEach(section => {
-                section.classList.remove('section-visible');
-                section.classList.add('section-hidden');
-            });
-            
-            const target = document.getElementById(sectionId);
-            target.classList.remove('section-hidden');
-            target.classList.add('section-visible');
-            
-            window.scrollTo(0, 0);
-        }
-
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        }
-
-        function renderBeats() {
-            const featuredContainer = document.getElementById('featured-beats-container');
-            const catalogContainer = document.getElementById('full-catalog-container');
-            
-            beats.slice(0, 3).forEach(beat => {
-                featuredContainer.innerHTML += createBeatCard(beat);
-            });
-
-            beats.forEach(beat => {
-                catalogContainer.innerHTML += createBeatCard(beat);
-            });
-        }
-
-        function createBeatCard(beat) {
-            return `
-                <div class="bg-brand-card rounded-xl overflow-hidden border border-white/5 hover:border-brand-accent/30 transition-all duration-300 group cursor-pointer" onclick="openBeatDetail(${beat.id})">
-                    <div class="relative aspect-square overflow-hidden">
-                        <img src="${beat.cover}" alt="${beat.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                            <button onclick="event.stopPropagation(); openBeatDetail(${beat.id})" class="h-14 w-14 bg-white rounded-full flex items-center justify-center text-brand-dark hover:scale-110 transition-transform shadow-lg">
-                                <i class="fas fa-play ml-1 text-xl"></i>
-                            </button>
-                        </div>
-                        ${beat.isFree ? '<div class="absolute top-3 right-3 bg-green-600 text-white text-xs font-bold px-2 py-1 rounded">FREE</div>' : ''}
-                    </div>
-                    <div class="p-5">
-                        <div class="flex justify-between items-start mb-2">
-                            <div>
-                                <h3 class="text-lg font-bold text-white">${beat.title}</h3>
-                                <p class="text-sm text-brand-muted">${beat.genre} • ${beat.bpm} BPM</p>
-                            </div>
-                            <span class="text-xs font-mono bg-white/10 px-2 py-1 rounded text-brand-muted">${beat.key}</span>
-                        </div>
-                        <div class="mt-4 flex gap-2">
-                            <button onclick="event.stopPropagation(); openBeatDetail(${beat.id})" class="flex-1 py-2 rounded-lg font-medium text-sm transition-colors ${beat.isFree ? 'bg-green-600 hover:bg-green-700 text-white' : 'bg-brand-accent hover:bg-brand-accentHover text-white'}">
-                                ${beat.isFree ? 'Free Download' : 'View Details'}
-                            </button>
-                            <button onclick="event.stopPropagation();" class="px-3 py-2 rounded-lg border border-white/10 text-brand-muted hover:text-white hover:bg-white/5 transition-colors">
-                                <i class="fas fa-heart"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function openBeatDetail(id) {
-            const beat = beats.find(b => b.id === id);
-            currentBeat = beat;
-            
-            document.getElementById('detail-cover').src = beat.cover;
-            document.getElementById('detail-title').innerText = beat.title;
-            document.getElementById('detail-genre').innerText = beat.genre;
-            document.getElementById('detail-bpm').innerText = `${beat.bpm} BPM`;
-            document.getElementById('detail-key').innerText = beat.key;
-            
-            const freeOption = document.getElementById('detail-free-option');
-            if (beat.isFree || beat.downloadFile) {
-                freeOption.classList.remove('hidden');
-            } else {
-                freeOption.classList.add('hidden');
-            }
-            
-            // Try to load audio, fallback to demo if file not found
-            audioElement.src = beat.audio;
-            audioElement.onerror = function() {
-                console.log('Audio file not found, using demo audio');
-                // Fallback to online demo audio if local file not found
-                audioElement.src = `https://www.soundhelix.com/examples/mp3/SoundHelix-Song-${id}.mp3`;
-            };
-            
-            resetPlayer();
-            
-            navigateTo('beat-detail');
-        }
-
-        function resetPlayer() {
-            isPlaying = false;
-            audioElement.pause();
-            audioElement.currentTime = 0;
-            document.getElementById('detail-play-btn').innerHTML = '<i class="fas fa-play text-2xl ml-1"></i>';
-            document.getElementById('detail-soundwave').classList.add('soundwave-paused');
-            document.getElementById('detail-progress-bar').style.width = '0%';
-            updateTimer(0);
-            if (updateInterval) clearInterval(updateInterval);
-        }
-
-        function toggleDetailPlay() {
-            if (!currentBeat) return;
-            
-            if (isPlaying) {
-                audioElement.pause();
-                document.getElementById('detail-play-btn').innerHTML = '<i class="fas fa-pause text-2xl"></i>';
-                document.getElementById('detail-soundwave').classList.add('soundwave-paused');
-            } else {
-                audioElement.play().catch(e => {
-                    console.log('Audio playback error:', e);
-                    alert('Audio file not found. Please make sure you have added your audio files to the "audios" folder.');
-                });
-                document.getElementById('detail-play-btn').innerHTML = '<i class="fas fa-pause text-2xl"></i>';
-                document.getElementById('detail-soundwave').classList.remove('soundwave-paused');
-                
-                updateInterval = setInterval(() => {
-                    const progress = (audioElement.currentTime / audioElement.duration) * 100;
-                    document.getElementById('detail-progress-bar').style.width = `${progress}%`;
-                    updateTimer(audioElement.currentTime);
-                }, 100);
-            }
-            isPlaying = !isPlaying;
-        }
-
-        function updateTimer(seconds) {
-            const mins = Math.floor(seconds / 60);
-            const secs = Math.floor(seconds % 60);
-            const totalMins = Math.floor(audioElement.duration / 60) || 0;
-            const totalSecs = Math.floor(audioElement.duration % 60) || 0;
-            document.getElementById('detail-timer').innerText = 
-                `${mins}:${secs.toString().padStart(2, '0')} / ${totalMins}:${totalSecs.toString().padStart(2, '0')}`;
-        }
-
-        function skip(seconds) {
-            if (!currentBeat) return;
-            audioElement.currentTime = Math.max(0, Math.min(audioElement.duration, audioElement.currentTime + seconds));
-        }
-
-        function seekAudio(event) {
-            if (!currentBeat) return;
-            const progressContainer = document.getElementById('detail-progress');
-            const rect = progressContainer.getBoundingClientRect();
-            const clickX = event.clientX - rect.left;
-            const width = rect.width;
-            const percentage = clickX / width;
-            audioElement.currentTime = percentage * audioElement.duration;
-        }
-
-        function filterBeats() {
-            const searchTerm = document.getElementById('search-input').value.toLowerCase();
-            const genreFilter = document.getElementById('genre-filter').value;
-            const catalogContainer = document.getElementById('full-catalog-container');
-            
-            const filtered = beats.filter(beat => {
-                const matchesSearch = beat.title.toLowerCase().includes(searchTerm);
-                const matchesGenre = genreFilter === '' || beat.genre === genreFilter;
-                return matchesSearch && matchesGenre;
-            });
-            
-            catalogContainer.innerHTML = '';
-            filtered.forEach(beat => {
-                catalogContainer.innerHTML += createBeatCard(beat);
-            });
-        }
-
-        // Free Download Modal Functions
-        function showFreeDownloadModal() {
-            document.getElementById('free-download-modal').classList.add('active');
-        }
-
-        function closeFreeDownloadModal(event) {
-            if (event.target.id === 'free-download-modal') {
-                document.getElementById('free-download-modal').classList.remove('active');
-            }
-        }
-
-        function closeFreeDownloadModalDirect() {
-            document.getElementById('free-download-modal').classList.remove('active');
-        }
-
-        function confirmFreeDownload() {
-            if (!currentBeat) return;
-            
-            closeFreeDownloadModalDirect();
-            
-            const downloadFile = currentBeat.downloadFile || currentBeat.audio;
-            const fileName = `${currentBeat.title.replace(/\s+/g, '_')}_FREE.mp3`;
-            
-            // Create download link
-            const link = document.createElement('a');
-            link.href = downloadFile;
-            link.download = fileName;
-            link.target = '_blank';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            // Show success message with credit reminder
-            setTimeout(() => {
-                alert(`✅ Download started for "${currentBeat.title}"!\n\n⚠️ REMINDER: You must include "Prod. Liamliterally" in:\n• Your song TITLE\n• Your video/streaming DESCRIPTION\n\nThank you for supporting!`);
-            }, 500);
-        }
-
-        function buyBeat(licenseType) {
-            if (!currentBeat) return;
-            
-            const prices = {
-                basic: 29.99,
-                premium: 79.99,
-                unlimited: 199.99
-            };
-            
-            alert(`🛒 Redirecting to checkout...\n\nBeat: ${currentBeat.title}\nLicense: ${licenseType.charAt(0).toUpperCase() + licenseType.slice(1)}\nPrice: $${prices[licenseType]}\n\nThis would connect to your payment processor (PayPal, Stripe, BeatStars, etc.)`);
-        }
-
-        function handleContactSubmit(e) {
-            e.preventDefault();
-            const btn = e.target.querySelector('button[type="submit"]');
-            const originalText = btn.innerText;
-            
-            btn.innerText = "Sending...";
-            btn.disabled = true;
-            btn.classList.add('opacity-75');
-
-            setTimeout(() => {
-                alert("Message sent successfully! Liamliterally will get back to you soon.");
-                e.target.reset();
-                btn.innerText = originalText;
-                btn.disabled = false;
-                btn.classList.remove('opacity-75');
-            }, 1500);
-        }
-
-        audioElement.addEventListener('ended', () => {
-            isPlaying = false;
-            document.getElementById('detail-play-btn').innerHTML = '<i class="fas fa-play text-2xl ml-1"></i>';
-            document.getElementById('detail-soundwave').classList.add('soundwave-paused');
-            if (updateInterval) clearInterval(updateInterval);
-        });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            renderBeats();
-        });
-    </script>
+<nav class="fixed w-full z-50 bg-brand-dark/90 backdrop-blur-md border-b border-white/10">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-16">
+<div class="flex-shrink-0 cursor-pointer" onclick="navigateTo('home')">
+<span class="text-2xl font-bold tracking-tighter text-white">LIAM<span class="text-brand-accent">LITERALLY</span></span>
+</div>
+<div class="hidden md:block">
+<div class="ml-10 flex items-baseline space-x-4">
+<button onclick="navigateTo('home')" class="hover:text-brand-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</button>
+<button onclick="navigateTo('catalog')" class="hover:text-brand-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Catalog</button>
+<button onclick="navigateTo('contact')" class="bg-brand-accent hover:bg-brand-accentHover text-white px-4 py-2 rounded-full text-sm font-medium transition-all shadow-lg shadow-brand-accent/20">Custom Beats</button>
+</div>
+</div>
+<div class="-mr-2 flex md:hidden">
+<button onclick="toggleMobileMenu()" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none">
+<i class="fas fa-bars"></i>
+</button>
+</div>
+</div>
+</div>
+<div id="mobile-menu" class="hidden md:hidden bg-brand-card border-b border-white/10">
+<div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+<button onclick="navigateTo('home'); toggleMobileMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">Home</button>
+<button onclick="navigateTo('catalog'); toggleMobileMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">Catalog</button>
+<button onclick="navigateTo('licensing'); toggleMobileMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">Licensing</button>
+<button onclick="navigateTo('contact'); toggleMobileMenu()" class="text-brand-accent font-bold block px-3 py-2 rounded-md text-base w-full text-left">Custom Beats</button>
+</div>
+</div>
+</nav>
+<main class="flex-grow pt-16">
+<section id="home" class="section-visible">
+<div class="relative bg-brand-card overflow-hidden">
+<div class="absolute inset-0">
+<img class="w-full h-full object-cover opacity-20" src="https://image.qwenlm.ai/public_source/c9d056b1-1b7f-4981-99e9-dd32526f83ec/1629ddd59-d5a6-47d9-8f62-9ffac1caab88.png" alt="Studio Background">
+<div class="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/80 to-transparent"></div>
+</div>
+<div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 flex flex-col items-center text-center">
+<h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-white mb-6">
+Liamliterally <br> <span class="gradient-text">Premium Instrumentals</span>
+</h1>
+<p class="mt-4 max-w-2xl text-xl text-brand-muted mb-10">
+High-quality beats by <strong>Liamliterally</strong>. Instant download.
+</p>
+<div class="flex flex-col sm:flex-row gap-4">
+<button onclick="navigateTo('catalog')" class="px-8 py-4 bg-brand-accent hover:bg-brand-accentHover text-white font-bold rounded-full text-lg transition-all shadow-lg shadow-brand-accent/30 transform hover:-translate-y-1">
+Browse Catalog
+</button>
+<button onclick="navigateTo('licensing')" class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-full text-lg transition-all backdrop-blur-sm border border-white/10">
+View Licenses
+</button>
+</div>
+</div>
+</div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+<div class="flex justify-between items-end mb-8">
+<h2 class="text-3xl font-bold text-white">Trending Now</h2>
+<button onclick="navigateTo('catalog')" class="text-brand-accent hover:text-white font-medium transition-colors">View All <i class="fas fa-arrow-right ml-1"></i></button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="featured-beats-container"></div>
+</div>
+</section>
+<section id="catalog" class="section-hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<div class="text-center mb-12">
+<h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Beat Catalog</h2>
+<p class="text-brand-muted">Browse the latest collection from Liamliterally.</p>
+<div class="mt-8 flex flex-col md:flex-row gap-4 justify-center">
+<div class="relative w-full md:w-96">
+<input type="text" id="search-input" placeholder="Search beats..." onkeyup="filterBeats()" class="w-full bg-brand-card border border-white/10 rounded-full py-3 px-6 text-white focus:outline-none focus:border-brand-accent transition-colors">
+<i class="fas fa-search absolute right-4 top-3.5 text-gray-500"></i>
+</div>
+<select id="genre-filter" onchange="filterBeats()" class="bg-brand-card border border-white/10 rounded-full py-3 px-6 text-white focus:outline-none focus:border-brand-accent cursor-pointer">
+<option value="">All Genres</option>
+<option value="Trap">Trap</option>
+<option value="Lo-Fi">Lo-Fi</option>
+<option value="Drill">Drill</option>
+<option value="R&B">R&B</option>
+</select>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="full-catalog-container"></div>
+</section>
+<section id="beat-detail" class="section-hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<button onclick="navigateTo('catalog')" class="mb-6 text-brand-muted hover:text-white transition-colors flex items-center gap-2">
+<i class="fas fa-arrow-left"></i> Back to Catalog
+</button>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+<div class="flex flex-col items-center">
+<img id="detail-cover" src="" alt="Beat Cover" class="w-full max-w-md aspect-square object-cover rounded-2xl beat-detail-cover mb-6">
+<div class="w-full max-w-md bg-brand-card rounded-2xl p-6 border border-white/5">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-lg font-bold text-white">Preview</h3>
+<span id="detail-timer" class="text-brand-muted text-sm">0:00 / 0:00</span>
+</div>
+<div class="soundwave-container mb-4 soundwave-paused" id="detail-soundwave">
+<div class="soundwave-bar"></div><div class="soundwave-bar"></div><div class="soundwave-bar"></div>
+<div class="soundwave-bar"></div><div class="soundwave-bar"></div><div class="soundwave-bar"></div>
+<div class="soundwave-bar"></div><div class="soundwave-bar"></div><div class="soundwave-bar"></div>
+<div class="soundwave-bar"></div><div class="soundwave-bar"></div><div class="soundwave-bar"></div>
+<div class="soundwave-bar"></div><div class="soundwave-bar"></div><div class="soundwave-bar"></div>
+<div class="soundwave-bar"></div><div class="soundwave-bar"></div><div class="soundwave-bar"></div>
+<div class="soundwave-bar"></div><div class="soundwave-bar"></div>
+</div>
+<div class="progress-container mb-4" id="detail-progress" onclick="seekAudio(event)">
+<div class="progress-bar" id="detail-progress-bar"></div>
+</div>
+<div class="flex items-center justify-center gap-6">
+<button onclick="skip(-5)" class="text-brand-muted hover:text-white transition-colors">
+<i class="fas fa-rotate-left"></i> -5s
+</button>
+<button id="detail-play-btn" onclick="toggleDetailPlay()" class="h-16 w-16 rounded-full bg-brand-accent hover:bg-brand-accentHover text-white flex items-center justify-center transition-all shadow-lg shadow-brand-accent/30">
+<i class="fas fa-play text-2xl ml-1"></i>
+</button>
+<button onclick="skip(5)" class="text-brand-muted hover:text-white transition-colors">
+<i class="fas fa-rotate-right"></i> +5s
+</button>
+</div>
+</div>
+</div>
+<div>
+<h1 id="detail-title" class="text-4xl font-bold text-white mb-2"></h1>
+<p id="detail-artist" class="text-brand-accent text-lg mb-6">Prod. by Liamliterally</p>
+<div class="flex flex-wrap gap-4 mb-8">
+<span id="detail-genre" class="px-4 py-2 bg-white/5 rounded-full text-sm text-brand-muted border border-white/10"></span>
+<span id="detail-bpm" class="px-4 py-2 bg-white/5 rounded-full text-sm text-brand-muted border border-white/10"></span>
+<span id="detail-key" class="px-4 py-2 bg-white/5 rounded-full text-sm text-brand-muted border border-white/10"></span>
+</div>
+<div class="bg-brand-card rounded-2xl p-6 border border-white/5 mb-8">
+<h3 class="text-xl font-bold text-white mb-4">Purchase Options</h3>
+<div id="detail-free-option" class="hidden mb-4 p-4 bg-green-600/20 border border-green-600/50 rounded-xl">
+<div class="flex items-center justify-between mb-3">
+<div>
+<h4 class="font-bold text-white flex items-center gap-2">
+<i class="fas fa-gift text-green-500"></i> Free Download
+</h4>
+<p class="text-sm text-brand-muted">MP3 • Non-Exclusive • Tagged</p>
+</div>
+<button onclick="showFreeDownloadModal()" class="px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition-colors">
+<i class="fas fa-download mr-2"></i>Download
+</button>
+</div>
+<div class="bg-brand-dark/50 rounded-lg p-3 text-xs text-brand-muted border border-white/5">
+<i class="fas fa-info-circle text-brand-accent mr-2"></i>
+<strong>Requirements:</strong> You must credit "Prod. Liamliterally" in both the title and description of your project.
+</div>
+</div>
+<div class="space-y-4">
+<div class="p-4 bg-white/5 border border-white/10 rounded-xl hover:border-brand-accent/50 transition-colors">
+<div class="flex items-center justify-between">
+<div>
+<h4 class="font-bold text-white">Basic Lease</h4>
+<p class="text-sm text-brand-muted">MP3 • 50K Streams • 1 Video</p>
+</div>
+<button onclick="buyBeat('basic')" class="px-6 py-3 bg-brand-accent hover:bg-brand-accentHover text-white font-bold rounded-lg transition-colors">
+$29.99
+</button>
+</div>
+</div>
+<div class="p-4 bg-white/5 border border-white/10 rounded-xl hover:border-brand-accent/50 transition-colors">
+<div class="flex items-center justify-between">
+<div>
+<h4 class="font-bold text-white">Premium Lease</h4>
+<p class="text-sm text-brand-muted">MP3 + WAV • 500K Streams • Unlimited Videos</p>
+</div>
+<button onclick="buyBeat('premium')" class="px-6 py-3 bg-brand-accent hover:bg-brand-accentHover text-white font-bold rounded-lg transition-colors">
+$79.99
+</button>
+</div>
+</div>
+<div class="p-4 bg-white/5 border border-white/10 rounded-xl hover:border-brand-accent/50 transition-colors">
+<div class="flex items-center justify-between">
+<div>
+<h4 class="font-bold text-white">Unlimited Lease</h4>
+<p class="text-sm text-brand-muted">MP3 + WAV + Stems • Unlimited • Full Rights</p>
+</div>
+<button onclick="buyBeat('unlimited')" class="px-6 py-3 bg-brand-accent hover:bg-brand-accentHover text-white font-bold rounded-lg transition-colors">
+$199.99
+</button>
+</div>
+</div>
+<div class="p-4 bg-gradient-to-r from-brand-accent/20 to-brand-accent/5 border border-brand-accent/30 rounded-xl hover:border-brand-accent/50 transition-colors">
+<div class="flex items-center justify-between">
+<div>
+<h4 class="font-bold text-white flex items-center gap-2">
+<i class="fas fa-crown text-yellow-500"></i> Exclusive Rights
+</h4>
+<p class="text-sm text-brand-muted">Full Ownership • All Files • Contact for Price</p>
+</div>
+<button onclick="navigateTo('contact')" class="px-6 py-3 bg-white text-brand-dark font-bold rounded-lg transition-colors hover:bg-brand-accent hover:text-white">
+Contact
+</button>
+</div>
+</div>
+</div>
+<div class="mt-6 p-4 bg-brand-dark/50 rounded-xl border border-white/5">
+<h4 class="font-bold text-white mb-3 flex items-center gap-2">
+<i class="fas fa-clipboard-list text-brand-accent"></i>
+Free Download License Terms
+</h4>
+<ul class="space-y-2 text-sm text-brand-muted">
+<li class="flex items-start gap-2">
+<i class="fas fa-check text-green-500 mt-1 flex-shrink-0"></i>
+<span><strong>Title Credit:</strong> Include "Prod. Liamliterally" in your song title (e.g., "My Song (Prod. Liamliterally)")</span>
+</li>
+<li class="flex items-start gap-2">
+<i class="fas fa-check text-green-500 mt-1 flex-shrink-0"></i>
+<span><strong>Description Credit:</strong> Include "Prod. Liamliterally" in your video/streaming description</span>
+</li>
+<li class="flex items-start gap-2">
+<i class="fas fa-check text-green-500 mt-1 flex-shrink-0"></i>
+<span><strong>Non-Commercial Use:</strong> Free beats are for non-commercial use only (under 10,000 streams)</span>
+</li>
+<li class="flex items-start gap-2">
+<i class="fas fa-check text-green-500 mt-1 flex-shrink-0"></i>
+<span><strong>Non-Exclusive:</strong> Other artists may also use this beat</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="bg-brand-card/50 rounded-xl p-6 border border-white/5">
+<h3 class="text-lg font-bold text-white mb-4">License Information</h3>
+<ul class="space-y-2 text-brand-muted text-sm">
+<li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Instant Download After Purchase</li>
+<li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>High Quality Audio Files</li>
+<li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Use on All Streaming Platforms</li>
+<li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Credit: "Prod. by Liamliterally"</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="payment" class="section-hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<button onclick="navigateTo('catalog')" class="mb-6 text-brand-muted hover:text-white transition-colors flex items-center gap-2">
+<i class="fas fa-arrow-left"></i> Back to Catalog
+</button>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<div class="lg:col-span-2">
+<div class="bg-brand-card rounded-2xl p-8 border border-white/5">
+<div class="flex items-center gap-4 mb-8">
+<div class="h-12 w-12 rounded-full bg-brand-accent/20 flex items-center justify-center text-brand-accent">
+<i class="fas fa-lock text-xl"></i>
+</div>
+<div>
+<h2 class="text-2xl font-bold text-white">Secure Checkout</h2>
+<p class="text-brand-muted">Complete your purchase securely</p>
+</div>
+</div>
+<!-- Checkout Progress Steps -->
+<div class="flex items-center justify-between mb-8">
+<div class="checkout-step-indicator active flex items-center gap-2">
+<div class="h-8 w-8 rounded-full bg-brand-accent flex items-center justify-center text-white font-bold text-sm">1</div>
+<span class="text-white font-medium hidden sm:inline">Details</span>
+</div>
+<div class="flex-1 h-0.5 bg-white/10 mx-4"></div>
+<div class="checkout-step-indicator flex items-center gap-2">
+<div class="h-8 w-8 rounded-full bg-white/10 flex items-center justify-center text-brand-muted font-bold text-sm">2</div>
+<span class="text-brand-muted font-medium hidden sm:inline">Payment</span>
+</div>
+<div class="flex-1 h-0.5 bg-white/10 mx-4"></div>
+<div class="checkout-step-indicator flex items-center gap-2">
+<div class="h-8 w-8 rounded-full bg-white/10 flex items-center justify-center text-brand-muted font-bold text-sm">3</div>
+<span class="text-brand-muted font-medium hidden sm:inline">Confirm</span>
+</div>
+</div>
+<!-- Step 1: Customer Details -->
+<div id="checkout-step-1" class="checkout-step active">
+<h3 class="text-xl font-bold text-white mb-6">Customer Information</h3>
+<form id="customer-form" onsubmit="goToStep(2); return false;">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div>
+<label class="block text-sm font-medium text-brand-muted mb-2">First Name *</label>
+<input type="text" id="first-name" required class="w-full bg-brand-dark border border-white/10 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-brand-accent transition-colors">
+</div>
+<div>
+<label class="block text-sm font-medium text-brand-muted mb-2">Last Name *</label>
+<input type="text" id="last-name" required class="w-full bg-brand-dark border border-white/10 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-brand-accent transition-colors">
+</div>
+</div>
+<div class="mb-6">
+<label class="block text-sm font-medium text-brand-muted mb-2">Email Address *</label>
+<input type="email" id="email" required class="w-full bg-brand-dark border border-white/10 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-brand-accent transition-colors">
+<p class="text-xs text-brand-muted mt-2"><i class="fas fa-info-circle mr-1"></i>Your license files will be sent to this email</p>
+</div>
+<div class="mb-6">
+<label class="block text-sm font-medium text-brand-muted mb-2">Artist Name (Optional)</label>
+<input type="text" id="artist-name" class="w-full bg-brand-dark border border-white/10 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-brand-accent transition-colors">
+</div>
+<div>
+<label class="block text-sm font-medium text-brand-muted mb-2">Country *</label>
+<select id="country" required class="w-full bg-brand-dark border border-white/10 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-brand-accent transition-colors">
+<option value="">Select Country</option>
+<option value="US">United States</option>
+<option value="CA">Canada</option>
+<option value="UK">United Kingdom</option>
+<option value="AU">Australia</option>
+<option value="DE">Germany</option>
+<option value="FR">France</option>
+<option value="OTHER">Other</option>
+</select>
+</div>
+<div class="mt-8 flex justify-end">
+<button type="submit" class="px-8 py-3 bg-brand-accent hover:bg-brand-accentHover text-white font-bold rounded-lg transition-all shadow-lg shadow-brand-accent/20">
+Continue to Payment <i class="fas fa-arrow-right ml-2"></i>
+</button>
+</div>
+</form>
+</div>
+<!-- Step 2: Payment Method -->
+<div id="checkout-step-2" class="checkout-step">
+<h3 class="text-xl font-bold text-white mb-6">Payment Method</h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+<div class="payment-method-card selected rounded-xl p-4 cursor-pointer" onclick="selectPaymentMethod('card', this)">
+<div class="flex items-center justify-center h-12 mb-3">
+<i class="fas fa-credit-card text-2xl text-brand-accent"></i>
+</div>
+<p class="text-center text-white font-medium text-sm">Credit Card</p>
+</div>
+<div class="payment-method-card rounded-xl p-4 cursor-pointer" onclick="selectPaymentMethod('paypal', this)">
+<div class="flex items-center justify-center h-12 mb-3">
+<i class="fab fa-paypal text-2xl text-blue-400"></i>
+</div>
+<p class="text-center text-white font-medium text-sm">PayPal</p>
+</div>
+<div class="payment-method-card rounded-xl p-4 cursor-pointer" onclick="selectPaymentMethod('stripe', this)">
+<div class="flex items-center justify-center h-12 mb-3">
+<i class="fab fa-stripe text-2xl text-indigo-400"></i>
+</div>
+<p class="text-center text-white font-medium text-sm">Stripe</p>
+</div>
+</div>
+<!-- Credit Card Form -->
+<div id="card-payment-form" class="bg-brand-dark/50 rounded-xl p-6 border border-white/5 mb-6">
+<div class="mb-4">
+<label class="block text-sm font-medium text-brand-muted mb-2">Card Number *</label>
+<div class="relative">
+<input type="text" id="card-number" placeholder="1234 5678 9012 3456" class="w-full bg-brand-dark border border-white/10 rounded-lg py-3 px-4 pl-12 text-white focus:outline-none focus:border-brand-accent transition-colors">
+<i class="fas fa-credit-card absolute left-4 top-3.5 text-brand-muted"></i>
+</div>
+</div>
+<div class="mb-4">
+<label class="block text-sm font-medium text-brand-muted mb-2">Cardholder Name *</label>
+<input type="text" id="card-name" placeholder="John Doe" class="w-full bg-brand-dark border border-white/10 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-brand-accent transition-colors">
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-sm font-medium text-brand-muted mb-2">Expiry Date *</label>
+<input type="text" id="card-expiry" placeholder="MM/YY" class="w-full bg-brand-dark border border-white/10 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-brand-accent transition-colors">
+</div>
+<div>
+<label class="block text-sm font-medium text-brand-muted mb-2">CVV *</label>
+<div class="relative">
+<input type="text" id="card-cvv" placeholder="123" class="w-full bg-brand-dark border border-white/10 rounded-lg py-3 px-4 pl-12 text-white focus:outline-none focus:border-brand-accent transition-colors">
+<i class="fas fa-lock absolute left-4 top-3.5 text-brand-muted"></i>
+</div>
+</div>
+</div>
+</div>
+<!-- PayPal Info -->
+<div id="paypal-payment-info" class="hidden bg-brand-dark/50 rounded-xl p-6 border border-white/5 mb-6">
+<div class="flex items-center gap-4 mb-4">
+<div class="h-12 w-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+<i class="fab fa-paypal text-2xl text-blue-400"></i>
+</div>
+<div>
+<h4 class="text-white font-bold">PayPal Checkout</h4>
+<p class="text-brand-muted text-sm">You will be redirected to PayPal to complete your purchase</p>
+</div>
+</div>
+</div>
+<!-- Stripe Info -->
+<div id="stripe-payment-info" class="hidden bg-brand-dark/50 rounded-xl p-6 border border-white/5 mb-6">
+<div class="flex items-center gap-4 mb-4">
+<div class="h-12 w-12 rounded-full bg-indigo-500/20 flex items-center justify-center">
+<i class="fab fa-stripe text-2xl text-indigo-400"></i>
+</div>
+<div>
+<h4 class="text-white font-bold">Stripe Checkout</h4>
+<p class="text-brand-muted text-sm">Secure payment processing by Stripe</p>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3 mb-6">
+<input type="checkbox" id="save-card" class="w-4 h-4 rounded border-white/20 bg-brand-dark text-brand-accent focus:ring-brand-accent">
+<label for="save-card" class="text-sm text-brand-muted">Save payment information for future purchases</label>
+</div>
+<div class="flex justify-between">
+<button onclick="goToStep(1)" class="px-6 py-3 border border-white/20 hover:bg-white/5 text-white font-medium rounded-lg transition-colors">
+<i class="fas fa-arrow-left mr-2"></i>Back
+</button>
+<button onclick="goToStep(3)" class="px-8 py-3 bg-brand-accent hover:bg-brand-accentHover text-white font-bold rounded-lg transition-all shadow-lg shadow-brand-accent/20">
+Review Order <i class="fas fa-arrow-right ml-2"></i>
+</button>
+</div>
+</div>
+<!-- Step 3: Confirmation -->
+<div id="checkout-step-3" class="checkout-step">
+<h3 class="text-xl font-bold text-white mb-6">Confirm Your Order</h3>
+<div class="bg-brand-dark/50 rounded-xl p-6 border border-white/5 mb-6">
+<h4 class="text-white font-bold mb-4 flex items-center gap-2">
+<i class="fas fa-file-music text-brand-accent"></i>
+Order Summary
+</h4>
+<div class="flex items-center gap-4 mb-4 pb-4 border-b border-white/10">
+<img id="checkout-beat-cover" src="" alt="Beat Cover" class="w-16 h-16 rounded-lg object-cover">
+<div>
+<p id="checkout-beat-title" class="text-white font-bold"></p>
+<p id="checkout-license-type" class="text-brand-muted text-sm"></p>
+</div>
+</div>
+<div class="space-y-2 text-sm">
+<div class="flex justify-between text-brand-muted">
+<span>Subtotal</span>
+<span id="checkout-subtotal">$0.00</span>
+</div>
+<div class="flex justify-between text-brand-muted">
+<span>Processing Fee</span>
+<span id="checkout-fee">$0.00</span>
+</div>
+<div class="flex justify-between text-white font-bold text-lg pt-2 border-t border-white/10">
+<span>Total</span>
+<span id="checkout-total">$0.00</span>
+</div>
+</div>
+</div>
+<div class="bg-brand-dark/50 rounded-xl p-6 border border-white/5 mb-6">
+<h4 class="text-white font-bold mb-4 flex items-center gap-2">
+<i class="fas fa-user text-brand-accent"></i>
+Customer Details
+</h4>
+<div class="grid grid-cols-2 gap-4 text-sm">
+<div>
+<p class="text-brand-muted">Name</p>
+<p id="checkout-name" class="text-white"></p>
+</div>
+<div>
+<p class="text-brand-muted">Email</p>
+<p id="checkout-email" class="text-white"></p>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3 mb-6 p-4 bg-green-600/10 border border-green-600/30 rounded-xl">
+<i class="fas fa-shield-check text-green-500 text-xl"></i>
+<div>
+<p class="text-white font-medium">Secure Transaction</p>
+<p class="text-brand-muted text-sm">Your payment information is encrypted and secure</p>
+</div>
+</div>
+<div class="flex items-center gap-3 mb-6">
+<input type="checkbox" id="terms-agree" required class="w-4 h-4 rounded border-white/20 bg-brand-dark text-brand-accent focus:ring-brand-accent">
+<label for="terms-agree" class="text-sm text-brand-muted">
+I agree to the <a href="#" class="text-brand-accent hover:underline">Terms of Service</a> and <a href="#" class="text-brand-accent hover:underline">License Agreement</a>
+</label>
+</div>
+<div class="flex justify-between">
+<button onclick="goToStep(2)" class="px-6 py-3 border border-white/20 hover:bg-white/5 text-white font-medium rounded-lg transition-colors">
+<i class="fas fa-arrow-left mr-2"></i>Back
+</button>
+<button onclick="processPayment()" id="complete-purchase-btn" class="px-8 py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition-all shadow-lg shadow-green-600/20">
+<i class="fas fa-lock mr-2"></i>Complete Purchase
+</button>
+</div>
+</div>
+<!-- Processing State -->
+<div id="checkout-processing" class="checkout-step text-center py-12">
+<div class="spinner mx-auto mb-6"></div>
+<h3 class="text-xl font-bold text-white mb-2">Processing Payment...</h3>
+<p class="text-brand-muted">Please wait while we complete your transaction</p>
+</div>
+<!-- Success State -->
+<div id="checkout-success" class="checkout-step text-center py-12">
+<div class="success-checkmark mb-6">
+<div class="check-icon"></div>
+</div>
+<h3 class="text-2xl font-bold text-white mb-2">Payment Successful!</h3>
+<p class="text-brand-muted mb-6">Your license files have been sent to your email</p>
+<div class="bg-brand-dark/50 rounded-xl p-6 border border-white/5 mb-6 max-w-md mx-auto">
+<h4 class="text-white font-bold mb-4">What's Next?</h4>
+<ul class="space-y-3 text-left text-brand-muted text-sm">
+<li class="flex items-start gap-3">
+<i class="fas fa-check text-green-500 mt-0.5"></i>
+<span>Check your email for download links</span>
+</li>
+<li class="flex items-start gap-3">
+<i class="fas fa-check text-green-500 mt-0.5"></i>
+<span>Download your license certificate</span>
+</li>
+<li class="flex items-start gap-3">
+<i class="fas fa-check text-green-500 mt-0.5"></i>
+<span>Start creating your music!</span>
+</li>
+</ul>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<button onclick="navigateTo('catalog')" class="px-8 py-3 bg-brand-accent hover:bg-brand-accentHover text-white font-bold rounded-lg transition-all">
+Browse More Beats
+</button>
+<button onclick="downloadLicense()" class="px-8 py-3 border border-white/20 hover:bg-white/5 text-white font-medium rounded-lg transition-colors">
+<i class="fas fa-download mr-2"></i>Download License
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Order Summary Sidebar -->
+<div class="lg:col-span-1">
+<div class="bg-brand-card rounded-2xl p-6 border border-white/5 sticky top-24">
+<h3 class="text-xl font-bold text-white mb-6">Order Summary</h3>
+<div class="flex items-center gap-4 mb-6 pb-6 border-b border-white/10">
+<img id="summary-beat-cover" src="" alt="Beat Cover" class="w-20 h-20 rounded-xl object-cover">
+<div>
+<p id="summary-beat-title" class="text-white font-bold"></p>
+<p class="text-brand-accent text-sm">Prod. by Liamliterally</p>
+<p id="summary-license-type" class="text-brand-muted text-sm mt-1"></p>
+</div>
+</div>
+<div class="space-y-3 mb-6">
+<div class="flex justify-between text-brand-muted">
+<span>Beat Price</span>
+<span id="summary-beat-price">$0.00</span>
+</div>
+<div class="flex justify-between text-brand-muted">
+<span>Processing Fee (2.9%)</span>
+<span id="summary-fee">$0.00</span>
+</div>
+<div class="flex justify-between text-white font-bold text-lg pt-3 border-t border-white/10">
+<span>Total</span>
+<span id="summary-total">$0.00</span>
+</div>
+</div>
+<div class="bg-brand-dark/50 rounded-xl p-4 border border-white/5 mb-6">
+<h4 class="text-white font-bold mb-3 text-sm flex items-center gap-2">
+<i class="fas fa-shield text-brand-accent"></i>
+Buyer Protection
+</h4>
+<ul class="space-y-2 text-xs text-brand-muted">
+<li class="flex items-start gap-2">
+<i class="fas fa-check text-green-500 mt-0.5"></i>
+<span>Secure payment processing</span>
+</li>
+<li class="flex items-start gap-2">
+<i class="fas fa-check text-green-500 mt-0.5"></i>
+<span>Instant file delivery</span>
+</li>
+<li class="flex items-start gap-2">
+<i class="fas fa-check text-green-500 mt-0.5"></i>
+<span>Lifetime license access</span>
+</li>
+</ul>
+</div>
+<div class="flex items-center gap-3 text-xs text-brand-muted">
+<i class="fab fa-cc-visa text-xl"></i>
+<i class="fab fa-cc-mastercard text-xl"></i>
+<i class="fab fa-cc-amex text-xl"></i>
+<i class="fab fa-cc-paypal text-xl"></i>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="licensing" class="section-hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<div class="text-center mb-16">
+<h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Licensing & Usage Rights</h2>
+<p class="text-brand-muted max-w-2xl mx-auto">Choose the license that fits your project. All leases include high-quality MP3/WAV files. Exclusive rights available upon request.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="bg-brand-card rounded-2xl p-8 border border-white/5 hover:border-brand-accent/50 transition-all duration-300">
+<h3 class="text-xl font-bold text-white mb-2">Basic Lease</h3>
+<div class="text-3xl font-bold text-brand-accent mb-6">$29.99</div>
+<ul class="space-y-4 mb-8 text-brand-muted">
+<li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> MP3 File</li>
+<li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Up to 50,000 Streams</li>
+<li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Non-Exclusive</li>
+<li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> 1 Music Video</li>
+</ul>
+<button class="w-full py-3 rounded-lg border border-white/20 hover:bg-white/5 text-white font-medium transition-colors">Select Plan</button>
+</div>
+<div class="bg-brand-card rounded-2xl p-8 border-2 border-brand-accent relative transform md:-translate-y-4 shadow-2xl shadow-brand-accent/10">
+<div class="absolute top-0 right-0 bg-brand-accent text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">POPULAR</div>
+<h3 class="text-xl font-bold text-white mb-2">Premium Lease</h3>
+<div class="text-3xl font-bold text-brand-accent mb-6">$79.99</div>
+<ul class="space-y-4 mb-8 text-brand-muted">
+<li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> MP3 + WAV Files</li>
+<li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Up to 500,000 Streams</li>
+<li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Non-Exclusive</li>
+<li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Unlimited Music Videos</li>
+<li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Radio Play</li>
+</ul>
+<button class="w-full py-3 rounded-lg bg-brand-accent hover:bg-brand-accentHover text-white font-medium transition-colors shadow-lg">Select Plan</button>
+</div>
+<div class="bg-brand-card rounded-2xl p-8 border border-white/5 hover:border-brand-accent/50 transition-all duration-300">
+<h3 class="text-xl font-bold text-white mb-2">Unlimited Lease</h3>
+<div class="text-3xl font-bold text-brand-accent mb-6">$199.99</div>
+<ul class="space-y-4 mb-8 text-brand-muted">
+<li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> MP3 + WAV + Stems</li>
+<li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Unlimited Streams</li>
+<li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Non-Exclusive</li>
+<li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Broadcast Rights</li>
+<li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Full Control</li>
+</ul>
+<button class="w-full py-3 rounded-lg border border-white/20 hover:bg-white/5 text-white font-medium transition-colors">Select Plan</button>
+</div>
+</div>
+<div class="mt-16 bg-brand-card/50 rounded-xl p-8 border border-white/5">
+<h3 class="text-2xl font-bold text-white mb-4">Frequently Asked Questions</h3>
+<div class="space-y-4">
+<details class="group">
+<summary class="flex justify-between items-center font-medium cursor-pointer list-none text-white">
+<span>Do I get the trackouts/stems?</span>
+<span class="transition group-open:rotate-180"><i class="fas fa-chevron-down"></i></span>
+</summary>
+<div class="text-brand-muted mt-3 group-open:animate-fadeIn">
+Stems (trackouts) are only included with the Unlimited Lease or Exclusive rights purchase.
+</div>
+</details>
+<div class="h-px bg-white/10"></div>
+<details class="group">
+<summary class="flex justify-between items-center font-medium cursor-pointer list-none text-white">
+<span>Can I use the beat for YouTube?</span>
+<span class="transition group-open:rotate-180"><i class="fas fa-chevron-down"></i></span>
+</summary>
+<div class="text-brand-muted mt-3 group-open:animate-fadeIn">
+Yes! All licenses allow for YouTube usage. Just make sure to credit "Prod. by Liamliterally" in the description.
+</div>
+</details>
+<div class="h-px bg-white/10"></div>
+<details class="group">
+<summary class="flex justify-between items-center font-medium cursor-pointer list-none text-white">
+<span>What are the free download requirements?</span>
+<span class="transition group-open:rotate-180"><i class="fas fa-chevron-down"></i></span>
+</summary>
+<div class="text-brand-muted mt-3 group-open:animate-fadeIn">
+Free downloads require you to credit "Prod. Liamliterally" in both your song title and description. Free beats are for non-commercial use only (under 10,000 streams).
+</div>
+</details>
+</div>
+</div>
+</section>
+<section id="contact" class="section-hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+<div>
+<h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Need a Custom Beat?</h2>
+<p class="text-brand-muted text-lg mb-8">
+Looking for something unique? I offer custom beat production services tailored to your specific style and vision. Let's create a hit together.
+</p>
+<div class="space-y-6">
+<div class="flex items-start">
+<div class="flex-shrink-0 h-12 w-12 rounded-lg bg-brand-accent/20 flex items-center justify-center text-brand-accent">
+<i class="fas fa-music text-xl"></i>
+</div>
+<div class="ml-4">
+<h4 class="text-lg font-bold text-white">Exclusive Rights</h4>
+<p class="text-brand-muted mt-1">Full ownership of the beat. You own the master recording.</p>
+</div>
+</div>
+<div class="flex items-start">
+<div class="flex-shrink-0 h-12 w-12 rounded-lg bg-brand-accent/20 flex items-center justify-center text-brand-accent">
+<i class="fas fa-sliders-h text-xl"></i>
+</div>
+<div class="ml-4">
+<h4 class="text-lg font-bold text-white">Custom Mixing</h4>
+<p class="text-brand-muted mt-1">I can mix and master your vocals on top of the beat.</p>
+</div>
+</div>
+</div>
+<div class="mt-12 pt-8 border-t border-white/10">
+<h4 class="text-white font-bold mb-4">Contact Info</h4>
+<div class="space-y-2 text-brand-muted">
+<p><i class="fas fa-envelope w-6"></i> @liamliterally.com</p>
+<p><i class="fab fa-instagram w-6"></i> @liamliterally_</p>
+<p><i class="fab fa-youtube w-6"></i> @LiamLiterallyWasTaken</p>
+<p><i class="fab fa-tiktok w-6"></i> @liamliterally_</p>
+</div>
+</div>
+</div>
+<div class="bg-brand-card p-8 rounded-2xl border border-white/5 shadow-xl">
+<form onsubmit="handleContactSubmit(event)">
+<div class="grid grid-cols-1 gap-6">
+<div>
+<label class="block text-sm font-medium text-brand-muted mb-2">Name</label>
+<input type="text" required class="w-full bg-brand-dark border border-white/10 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-brand-accent transition-colors">
+</div>
+<div>
+<label class="block text-sm font-medium text-brand-muted mb-2">Email</label>
+<input type="email" required class="w-full bg-brand-dark border border-white/10 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-brand-accent transition-colors">
+</div>
+<div>
+<label class="block text-sm font-medium text-brand-muted mb-2">Project Type</label>
+<select class="w-full bg-brand-dark border border-white/10 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-brand-accent transition-colors">
+<option>Custom Beat Production</option>
+<option>Exclusive Rights Inquiry</option>
+<option>Mixing/Mastering</option>
+<option>Other</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-medium text-brand-muted mb-2">Message / Reference Links</label>
+<textarea rows="4" required class="w-full bg-brand-dark border border-white/10 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-brand-accent transition-colors"></textarea>
+</div>
+<button type="submit" class="w-full bg-brand-accent hover:bg-brand-accentHover text-white font-bold py-4 rounded-lg transition-all shadow-lg shadow-brand-accent/20">
+Send Request
+</button>
+</div>
+</form>
+</div>
+</div>
+</section>
+</main>
+<footer class="bg-brand-card border-t border-white/10 pt-12 pb-8">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+<div class="col-span-1 md:col-span-2">
+<span class="text-2xl font-bold tracking-tighter text-white">LIAM<span class="text-brand-accent">LITERALLY</span></span>
+<p class="mt-4 text-brand-muted max-w-sm">
+Providing high-quality instrumentals for artists worldwide. Join the community and start creating today.
+</p>
+</div>
+<div>
+<h4 class="text-white font-bold mb-4">Quick Links</h4>
+<ul class="space-y-2 text-brand-muted">
+<li><button onclick="navigateTo('home')" class="hover:text-brand-accent transition-colors">Home</button></li>
+<li><button onclick="navigateTo('catalog')" class="hover:text-brand-accent transition-colors">Catalog</button></li>
+<li><button onclick="navigateTo('licensing')" class="hover:text-brand-accent transition-colors">Licensing</button></li>
+<li><button onclick="navigateTo('contact')" class="hover:text-brand-accent transition-colors">Contact</button></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-bold mb-4">Connect</h4>
+<div class="flex space-x-4">
+<a href="https://www.youtube.com/@LiamLiterallyWasTaken" target="_blank" class="h-10 w-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-red-600 transition-all">
+<i class="fab fa-youtube"></i>
+</a>
+<a href="https://instagram.com/liamliterally_" target="_blank" class="h-10 w-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-pink-600 transition-all">
+<i class="fab fa-instagram"></i>
+</a>
+<a href="https://tiktok.com/@liamliterally_" target="_blank" class="h-10 w-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-black transition-all border border-white/20">
+<i class="fab fa-tiktok"></i>
+</a>
+</div>
+</div>
+</div>
+<div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center">
+<p class="text-brand-muted text-sm">&copy; 2026 Liamliterally. All rights reserved.</p>
+<div class="flex space-x-6 mt-4 md:mt-0 text-sm text-brand-muted">
+</div>
+</div>
+</div>
+</footer>
+<!-- Free Download Modal -->
+<div class="modal-overlay" id="free-download-modal" onclick="closeFreeDownloadModal(event)">
+<div class="modal-content">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-xl font-bold text-white flex items-center gap-2">
+<i class="fas fa-gift text-green-500"></i> Free Download
+</h3>
+<button onclick="closeFreeDownloadModalDirect()" class="text-brand-muted hover:text-white transition-colors">
+<i class="fas fa-times text-xl"></i>
+</button>
+</div>
+<div class="bg-brand-dark/50 rounded-xl p-4 mb-6 border border-white/5">
+<p class="text-white font-bold mb-3">⚠️ License Agreement</p>
+<p class="text-brand-muted text-sm mb-4">By downloading this beat for free, you agree to the following terms:</p>
+<ul class="space-y-2 text-sm text-brand-muted">
+<li class="flex items-start gap-2">
+<i class="fas fa-check text-green-500 mt-1 flex-shrink-0"></i>
+<span>Include <strong>"Prod. Liamliterally"</strong> in your song title</span>
+</li>
+<li class="flex items-start gap-2">
+<i class="fas fa-check text-green-500 mt-1 flex-shrink-0"></i>
+<span>Include <strong>"Prod. Liamliterally"</strong> in your description</span>
+</li>
+<li class="flex items-start gap-2">
+<i class="fas fa-check text-green-500 mt-1 flex-shrink-0"></i>
+<span>Non-commercial use only (under 10,000 streams)</span>
+</li>
+<li class="flex items-start gap-2">
+<i class="fas fa-check text-green-500 mt-1 flex-shrink-0"></i>
+<span>Non-exclusive license (others may use this beat)</span>
+</li>
+</ul>
+</div>
+<div class="flex gap-3">
+<button onclick="closeFreeDownloadModalDirect()" class="flex-1 py-3 rounded-lg border border-white/20 hover:bg-white/5 text-white font-medium transition-colors">
+Cancel
+</button>
+<button onclick="confirmFreeDownload()" class="flex-1 py-3 rounded-lg bg-green-600 hover:bg-green-700 text-white font-bold transition-colors">
+<i class="fas fa-download mr-2"></i>I Agree & Download
+</button>
+</div>
+</div>
+</div>
+<!-- Hidden Audio Element -->
+<audio id="audio-element" preload="auto"></audio>
+<script>
+const beats = [
+{
+id: 1,
+title: "SILENT HILL",
+genre: "HoodTrap",
+bpm: 144,
+key: "C♯ minor",
+price: 29.99,
+isFree: false,
+cover: "png/maxresdefault.jpg",
+audio: "audio/SilentHill (1).wav",
+downloadFile: "audio/SilentHill (1).wav",
+duration: 180
+},
+];
+const licensePrices = {
+basic: 29.99,
+premium: 79.99,
+unlimited: 199.99
+};
+const licenseNames = {
+basic: 'Basic Lease',
+premium: 'Premium Lease',
+unlimited: 'Unlimited Lease'
+};
+let currentBeat = null;
+let currentLicense = null;
+let isPlaying = false;
+let audioElement = document.getElementById('audio-element');
+let updateInterval = null;
+let selectedPaymentMethod = 'card';
+function navigateTo(sectionId) {
+document.querySelectorAll('main > section').forEach(section => {
+section.classList.remove('section-visible');
+section.classList.add('section-hidden');
+});
+const target = document.getElementById(sectionId);
+target.classList.remove('section-hidden');
+target.classList.add('section-visible');
+window.scrollTo(0, 0);
+}
+function toggleMobileMenu() {
+const menu = document.getElementById('mobile-menu');
+menu.classList.toggle('hidden');
+}
+function renderBeats() {
+const featuredContainer = document.getElementById('featured-beats-container');
+const catalogContainer = document.getElementById('full-catalog-container');
+beats.slice(0, 3).forEach(beat => {
+featuredContainer.innerHTML += createBeatCard(beat);
+});
+beats.forEach(beat => {
+catalogContainer.innerHTML += createBeatCard(beat);
+});
+}
+function createBeatCard(beat) {
+return `
+<div class="bg-brand-card rounded-xl overflow-hidden border border-white/5 hover:border-brand-accent/30 transition-all duration-300 group cursor-pointer" onclick="openBeatDetail(${beat.id})">
+<div class="relative aspect-square overflow-hidden">
+<img src="${beat.cover}" alt="${beat.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<button onclick="event.stopPropagation(); openBeatDetail(${beat.id})" class="h-14 w-14 bg-white rounded-full flex items-center justify-center text-brand-dark hover:scale-110 transition-transform shadow-lg">
+<i class="fas fa-play ml-1 text-xl"></i>
+</button>
+</div>
+${beat.isFree ? '<div class="absolute top-3 right-3 bg-green-600 text-white text-xs font-bold px-2 py-1 rounded">FREE</div>' : ''}
+</div>
+<div class="p-5">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="text-lg font-bold text-white">${beat.title}</h3>
+<p class="text-sm text-brand-muted">${beat.genre} • ${beat.bpm} BPM</p>
+</div>
+<span class="text-xs font-mono bg-white/10 px-2 py-1 rounded text-brand-muted">${beat.key}</span>
+</div>
+<div class="mt-4 flex gap-2">
+<button onclick="event.stopPropagation(); openBeatDetail(${beat.id})" class="flex-1 py-2 rounded-lg font-medium text-sm transition-colors ${beat.isFree ? 'bg-green-600 hover:bg-green-700 text-white' : 'bg-brand-accent hover:bg-brand-accentHover text-white'}">
+${beat.isFree ? 'Free Download' : 'View Details'}
+</button>
+<button onclick="event.stopPropagation();" class="px-3 py-2 rounded-lg border border-white/10 text-brand-muted hover:text-white hover:bg-white/5 transition-colors">
+<i class="fas fa-heart"></i>
+</button>
+</div>
+</div>
+</div>
+`;
+}
+function openBeatDetail(id) {
+const beat = beats.find(b => b.id === id);
+currentBeat = beat;
+document.getElementById('detail-cover').src = beat.cover;
+document.getElementById('detail-title').innerText = beat.title;
+document.getElementById('detail-genre').innerText = beat.genre;
+document.getElementById('detail-bpm').innerText = `${beat.bpm} BPM`;
+document.getElementById('detail-key').innerText = beat.key;
+const freeOption = document.getElementById('detail-free-option');
+if (beat.isFree || beat.downloadFile) {
+freeOption.classList.remove('hidden');
+} else {
+freeOption.classList.add('hidden');
+}
+audioElement.src = beat.audio;
+audioElement.onerror = function() {
+console.log('Audio file not found, using demo audio');
+audioElement.src = `https://www.soundhelix.com/examples/mp3/SoundHelix-Song-${id}.mp3`;
+};
+resetPlayer();
+navigateTo('beat-detail');
+}
+function resetPlayer() {
+isPlaying = false;
+audioElement.pause();
+audioElement.currentTime = 0;
+document.getElementById('detail-play-btn').innerHTML = '<i class="fas fa-play text-2xl ml-1"></i>';
+document.getElementById('detail-soundwave').classList.add('soundwave-paused');
+document.getElementById('detail-progress-bar').style.width = '0%';
+updateTimer(0);
+if (updateInterval) clearInterval(updateInterval);
+}
+function toggleDetailPlay() {
+if (!currentBeat) return;
+if (isPlaying) {
+audioElement.pause();
+document.getElementById('detail-play-btn').innerHTML = '<i class="fas fa-pause text-2xl"></i>';
+document.getElementById('detail-soundwave').classList.add('soundwave-paused');
+} else {
+audioElement.play().catch(e => {
+console.log('Audio playback error:', e);
+alert('Audio file not found. Please make sure you have added your audio files to the "audios" folder.');
+});
+document.getElementById('detail-play-btn').innerHTML = '<i class="fas fa-pause text-2xl"></i>';
+document.getElementById('detail-soundwave').classList.remove('soundwave-paused');
+updateInterval = setInterval(() => {
+const progress = (audioElement.currentTime / audioElement.duration) * 100;
+document.getElementById('detail-progress-bar').style.width = `${progress}%`;
+updateTimer(audioElement.currentTime);
+}, 100);
+}
+isPlaying = !isPlaying;
+}
+function updateTimer(seconds) {
+const mins = Math.floor(seconds / 60);
+const secs = Math.floor(seconds % 60);
+const totalMins = Math.floor(audioElement.duration / 60) || 0;
+const totalSecs = Math.floor(audioElement.duration % 60) || 0;
+document.getElementById('detail-timer').innerText =
+`${mins}:${secs.toString().padStart(2, '0')} / ${totalMins}:${totalSecs.toString().padStart(2, '0')}`;
+}
+function skip(seconds) {
+if (!currentBeat) return;
+audioElement.currentTime = Math.max(0, Math.min(audioElement.duration, audioElement.currentTime + seconds));
+}
+function seekAudio(event) {
+if (!currentBeat) return;
+const progressContainer = document.getElementById('detail-progress');
+const rect = progressContainer.getBoundingClientRect();
+const clickX = event.clientX - rect.left;
+const width = rect.width;
+const percentage = clickX / width;
+audioElement.currentTime = percentage * audioElement.duration;
+}
+function filterBeats() {
+const searchTerm = document.getElementById('search-input').value.toLowerCase();
+const genreFilter = document.getElementById('genre-filter').value;
+const catalogContainer = document.getElementById('full-catalog-container');
+const filtered = beats.filter(beat => {
+const matchesSearch = beat.title.toLowerCase().includes(searchTerm);
+const matchesGenre = genreFilter === '' || beat.genre === genreFilter;
+return matchesSearch && matchesGenre;
+});
+catalogContainer.innerHTML = '';
+filtered.forEach(beat => {
+catalogContainer.innerHTML += createBeatCard(beat);
+});
+}
+function buyBeat(licenseType) {
+if (!currentBeat) return;
+currentLicense = licenseType;
+// Populate payment page with beat and license info
+document.getElementById('summary-beat-cover').src = currentBeat.cover;
+document.getElementById('summary-beat-title').innerText = currentBeat.title;
+document.getElementById('summary-license-type').innerText = licenseNames[licenseType];
+document.getElementById('checkout-beat-cover').src = currentBeat.cover;
+document.getElementById('checkout-beat-title').innerText = currentBeat.title;
+document.getElementById('checkout-license-type').innerText = licenseNames[licenseType];
+// Calculate prices
+const beatPrice = licensePrices[licenseType];
+const processingFee = beatPrice * 0.029;
+const total = beatPrice + processingFee;
+// Update summary
+document.getElementById('summary-beat-price').innerText = `$${beatPrice.toFixed(2)}`;
+document.getElementById('summary-fee').innerText = `$${processingFee.toFixed(2)}`;
+document.getElementById('summary-total').innerText = `$${total.toFixed(2)}`;
+document.getElementById('checkout-subtotal').innerText = `$${beatPrice.toFixed(2)}`;
+document.getElementById('checkout-fee').innerText = `$${processingFee.toFixed(2)}`;
+document.getElementById('checkout-total').innerText = `$${total.toFixed(2)}`;
+// Reset checkout steps
+resetCheckout();
+navigateTo('payment');
+}
+function resetCheckout() {
+document.querySelectorAll('.checkout-step').forEach(step => {
+step.classList.remove('active');
+});
+document.getElementById('checkout-step-1').classList.add('active');
+document.querySelectorAll('.checkout-step-indicator').forEach((indicator, index) => {
+if (index === 0) {
+indicator.classList.add('active');
+indicator.querySelector('div').classList.remove('bg-white/10');
+indicator.querySelector('div').classList.add('bg-brand-accent');
+indicator.querySelector('span').classList.remove('text-brand-muted');
+indicator.querySelector('span').classList.add('text-white');
+} else {
+indicator.classList.remove('active');
+indicator.querySelector('div').classList.remove('bg-brand-accent');
+indicator.querySelector('div').classList.add('bg-white/10');
+indicator.querySelector('span').classList.remove('text-white');
+indicator.querySelector('span').classList.add('text-brand-muted');
+}
+});
+document.getElementById('customer-form').reset();
+}
+function goToStep(step) {
+// Validate step 1
+if (step === 2) {
+const firstName = document.getElementById('first-name').value;
+const lastName = document.getElementById('last-name').value;
+const email = document.getElementById('email').value;
+const country = document.getElementById('country').value;
+if (!firstName || !lastName || !email || !country) {
+alert('Please fill in all required fields');
+return;
+}
+// Populate checkout summary
+document.getElementById('checkout-name').innerText = `${firstName} ${lastName}`;
+document.getElementById('checkout-email').innerText = email;
+}
+// Validate step 3
+if (step === 3) {
+if (!document.getElementById('terms-agree').checked) {
+alert('Please agree to the Terms of Service and License Agreement');
+return;
+}
+}
+// Update steps display
+document.querySelectorAll('.checkout-step').forEach(s => s.classList.remove('active'));
+document.getElementById(`checkout-step-${step}`).classList.add('active');
+// Update progress indicators
+document.querySelectorAll('.checkout-step-indicator').forEach((indicator, index) => {
+const stepNum = index + 1;
+if (stepNum <= step) {
+indicator.classList.add('active');
+indicator.querySelector('div').classList.remove('bg-white/10');
+indicator.querySelector('div').classList.add('bg-brand-accent');
+indicator.querySelector('span').classList.remove('text-brand-muted');
+indicator.querySelector('span').classList.add('text-white');
+} else {
+indicator.classList.remove('active');
+indicator.querySelector('div').classList.remove('bg-brand-accent');
+indicator.querySelector('div').classList.add('bg-white/10');
+indicator.querySelector('span').classList.remove('text-white');
+indicator.querySelector('span').classList.add('text-brand-muted');
+}
+});
+}
+function selectPaymentMethod(method, element) {
+selectedPaymentMethod = method;
+document.querySelectorAll('.payment-method-card').forEach(card => {
+card.classList.remove('selected');
+});
+element.classList.add('selected');
+// Show/hide payment forms
+document.getElementById('card-payment-form').classList.toggle('hidden', method !== 'card');
+document.getElementById('paypal-payment-info').classList.toggle('hidden', method !== 'paypal');
+document.getElementById('stripe-payment-info').classList.toggle('hidden', method !== 'stripe');
+}
+function processPayment() {
+if (!document.getElementById('terms-agree').checked) {
+alert('Please agree to the Terms of Service and License Agreement');
+return;
+}
+// Validate card info if card payment selected
+if (selectedPaymentMethod === 'card') {
+const cardNumber = document.getElementById('card-number').value;
+const cardName = document.getElementById('card-name').value;
+const cardExpiry = document.getElementById('card-expiry').value;
+const cardCvv = document.getElementById('card-cvv').value;
+if (!cardNumber || !cardName || !cardExpiry || !cardCvv) {
+alert('Please fill in all payment details');
+return;
+}
+}
+// Show processing state
+document.querySelectorAll('.checkout-step').forEach(s => s.classList.remove('active'));
+document.getElementById('checkout-processing').classList.add('active');
+// Simulate payment processing
+setTimeout(() => {
+document.getElementById('checkout-processing').classList.remove('active');
+document.getElementById('checkout-success').classList.add('active');
+// Update final progress indicator
+document.querySelectorAll('.checkout-step-indicator').forEach(indicator => {
+indicator.querySelector('div').classList.remove('bg-white/10');
+indicator.querySelector('div').classList.add('bg-brand-accent');
+indicator.querySelector('span').classList.remove('text-brand-muted');
+indicator.querySelector('span').classList.add('text-white');
+});
+}, 3000);
+}
+function downloadLicense() {
+alert('📄 License certificate downloaded!\n\nYour license PDF has been sent to your email address.');
+}
+function showFreeDownloadModal() {
+document.getElementById('free-download-modal').classList.add('active');
+}
+function closeFreeDownloadModal(event) {
+if (event.target.id === 'free-download-modal') {
+document.getElementById('free-download-modal').classList.remove('active');
+}
+}
+function closeFreeDownloadModalDirect() {
+document.getElementById('free-download-modal').classList.remove('active');
+}
+function confirmFreeDownload() {
+if (!currentBeat) return;
+closeFreeDownloadModalDirect();
+const downloadFile = currentBeat.downloadFile || currentBeat.audio;
+const fileName = `${currentBeat.title.replace(/\s+/g, '_')}_FREE.mp3`;
+const link = document.createElement('a');
+link.href = downloadFile;
+link.download = fileName;
+link.target = '_blank';
+document.body.appendChild(link);
+link.click();
+document.body.removeChild(link);
+setTimeout(() => {
+alert(`✅ Download started for "${currentBeat.title}"!
+⚠️ REMINDER: You must include "Prod. Liamliterally" in:
+• Your song TITLE
+• Your video/streaming DESCRIPTION
+Thank you for supporting!`);
+}, 500);
+}
+function handleContactSubmit(e) {
+e.preventDefault();
+const btn = e.target.querySelector('button[type="submit"]');
+const originalText = btn.innerText;
+btn.innerText = "Sending...";
+btn.disabled = true;
+btn.classList.add('opacity-75');
+setTimeout(() => {
+alert("Message sent successfully! Liamliterally will get back to you soon.");
+e.target.reset();
+btn.innerText = originalText;
+btn.disabled = false;
+btn.classList.remove('opacity-75');
+}, 1500);
+}
+audioElement.addEventListener('ended', () => {
+isPlaying = false;
+document.getElementById('detail-play-btn').innerHTML = '<i class="fas fa-play text-2xl ml-1"></i>';
+document.getElementById('detail-soundwave').classList.add('soundwave-paused');
+if (updateInterval) clearInterval(updateInterval);
+});
+document.addEventListener('DOMContentLoaded', () => {
+renderBeats();
+});
+</script>
 </body>
 </html>
-
-
 
