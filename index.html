@@ -6,7 +6,7 @@
 <title>Liamliterally | Beats & Instrumentals</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="icon" type="image/png" sizes="32x32" href="logo.png">
+<link rel="icon" type="image/png" sizes="32x32" href="logo.png">
 <script>
 tailwind.config = {
 theme: {
@@ -67,7 +67,6 @@ background: linear-gradient(to right, #c084fc, #6366f1);
 -webkit-background-clip: text;
 -webkit-text-fill-color: transparent;
 }
-/* Soundwave Visualizer */
 .soundwave-container {
 display: flex;
 align-items: center;
@@ -109,7 +108,6 @@ animation: soundwave 0.8s ease-in-out infinite;
 animation-play-state: paused;
 height: 8px;
 }
-/* Progress Bar */
 .progress-container {
 width: 100%;
 height: 6px;
@@ -128,11 +126,9 @@ transition: width 0.1s linear;
 .progress-container:hover .progress-bar {
 background: linear-gradient(to right, #7c3aed, #a78bfa);
 }
-/* Beat Detail Page */
 .beat-detail-cover {
 box-shadow: 0 25px 50px -12px rgba(139, 92, 246, 0.25);
 }
-/* Modal Styles */
 .modal-overlay {
 position: fixed;
 top: 0;
@@ -161,7 +157,6 @@ animation: modalSlide 0.3s ease-out;
 from { opacity: 0; transform: translateY(-20px); }
 to { opacity: 1; transform: translateY(0); }
 }
-/* Payment Page Styles */
 .payment-method-card {
 border: 2px solid rgba(255,255,255,0.1);
 transition: all 0.3s ease;
@@ -180,7 +175,6 @@ display: none;
 display: block;
 animation: fadeIn 0.4s ease-out;
 }
-/* Loading Spinner */
 .spinner {
 border: 3px solid rgba(255,255,255,0.1);
 border-top: 3px solid #8b5cf6;
@@ -193,7 +187,6 @@ animation: spin 1s linear infinite;
 0% { transform: rotate(0deg); }
 100% { transform: rotate(360deg); }
 }
-/* Success Animation */
 .success-checkmark {
 width: 80px;
 height: 80px;
@@ -255,7 +248,6 @@ animation: rotate-line 1s ease-in;
 <div class="ml-10 flex items-baseline space-x-4">
 <button onclick="navigateTo('home')" class="hover:text-brand-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</button>
 <button onclick="navigateTo('catalog')" class="hover:text-brand-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Catalog</button>
-
 </div>
 </div>
 <div class="-mr-2 flex md:hidden">
@@ -269,7 +261,6 @@ animation: rotate-line 1s ease-in;
 <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
 <button onclick="navigateTo('home'); toggleMobileMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">Home</button>
 <button onclick="navigateTo('catalog'); toggleMobileMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">Catalog</button>
-
 </div>
 </div>
 </nav>
@@ -314,11 +305,13 @@ Browse Catalog
 <select id="genre-filter" onchange="filterBeats()" class="bg-brand-card border border-white/10 rounded-full py-3 px-6 text-white focus:outline-none focus:border-brand-accent cursor-pointer">
 <option value="">All Genres</option>
 <option value="Trap">Trap</option>
+<option value="Hip-Hop">Hip-Hop</option>
 <option value="Lo-Fi">Lo-Fi</option>
 <option value="Drill">Drill</option>
 <option value="R&B">R&B</option>
 </select>
 </div>
+<div id="filter-results" class="text-center mt-4 text-brand-muted"></div>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="full-catalog-container"></div>
 </section>
@@ -487,7 +480,6 @@ Free Download License Terms
 <p class="text-brand-muted">Complete your purchase securely</p>
 </div>
 </div>
-<!-- Checkout Progress Steps -->
 <div class="flex items-center justify-between mb-8">
 <div class="checkout-step-indicator active flex items-center gap-2">
 <div class="h-8 w-8 rounded-full bg-brand-accent flex items-center justify-center text-white font-bold text-sm">1</div>
@@ -504,7 +496,6 @@ Free Download License Terms
 <span class="text-brand-muted font-medium hidden sm:inline">Confirm</span>
 </div>
 </div>
-<!-- Step 1: Customer Details -->
 <div id="checkout-step-1" class="checkout-step active">
 <h3 class="text-xl font-bold text-white mb-6">Customer Information</h3>
 <form id="customer-form" onsubmit="goToStep(2); return false;">
@@ -547,7 +538,6 @@ Continue to Payment <i class="fas fa-arrow-right ml-2"></i>
 </div>
 </form>
 </div>
-<!-- Step 2: Payment Method -->
 <div id="checkout-step-2" class="checkout-step">
 <h3 class="text-xl font-bold text-white mb-6">Payment Method</h3>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
@@ -570,7 +560,6 @@ Continue to Payment <i class="fas fa-arrow-right ml-2"></i>
 <p class="text-center text-white font-medium text-sm">Stripe</p>
 </div>
 </div>
-<!-- Credit Card Form -->
 <div id="card-payment-form" class="bg-brand-dark/50 rounded-xl p-6 border border-white/5 mb-6">
 <div class="mb-4">
 <label class="block text-sm font-medium text-brand-muted mb-2">Card Number *</label>
@@ -597,7 +586,6 @@ Continue to Payment <i class="fas fa-arrow-right ml-2"></i>
 </div>
 </div>
 </div>
-<!-- PayPal Info -->
 <div id="paypal-payment-info" class="hidden bg-brand-dark/50 rounded-xl p-6 border border-white/5 mb-6">
 <div class="flex items-center gap-4 mb-4">
 <div class="h-12 w-12 rounded-full bg-blue-500/20 flex items-center justify-center">
@@ -609,7 +597,6 @@ Continue to Payment <i class="fas fa-arrow-right ml-2"></i>
 </div>
 </div>
 </div>
-<!-- Stripe Info -->
 <div id="stripe-payment-info" class="hidden bg-brand-dark/50 rounded-xl p-6 border border-white/5 mb-6">
 <div class="flex items-center gap-4 mb-4">
 <div class="h-12 w-12 rounded-full bg-indigo-500/20 flex items-center justify-center">
@@ -634,7 +621,6 @@ Review Order <i class="fas fa-arrow-right ml-2"></i>
 </button>
 </div>
 </div>
-<!-- Step 3: Confirmation -->
 <div id="checkout-step-3" class="checkout-step">
 <h3 class="text-xl font-bold text-white mb-6">Confirm Your Order</h3>
 <div class="bg-brand-dark/50 rounded-xl p-6 border border-white/5 mb-6">
@@ -702,13 +688,11 @@ I agree to the <a href="#" class="text-brand-accent hover:underline">Terms of Se
 </button>
 </div>
 </div>
-<!-- Processing State -->
 <div id="checkout-processing" class="checkout-step text-center py-12">
 <div class="spinner mx-auto mb-6"></div>
 <h3 class="text-xl font-bold text-white mb-2">Processing Payment...</h3>
 <p class="text-brand-muted">Please wait while we complete your transaction</p>
 </div>
-<!-- Success State -->
 <div id="checkout-success" class="checkout-step text-center py-12">
 <div class="success-checkmark mb-6">
 <div class="check-icon"></div>
@@ -743,7 +727,6 @@ Browse More Beats
 </div>
 </div>
 </div>
-<!-- Order Summary Sidebar -->
 <div class="lg:col-span-1">
 <div class="bg-brand-card rounded-2xl p-6 border border-white/5 sticky top-24">
 <h3 class="text-xl font-bold text-white mb-6">Order Summary</h3>
@@ -1036,7 +1019,7 @@ const beats = [
 {
 id: 1,
 title: "SILENT HILL",
-genre: "HoodTrap",
+genre: "Trap",
 bpm: 144,
 key: "C♯ minor",
 price: 29.99,
@@ -1046,7 +1029,6 @@ audio: "audio/SilentHill (1).wav",
 downloadFile: "audio/SilentHill (1).wav",
 duration: 180
 },
-
 {
 id: 2,
 title: "SUMMER",
@@ -1060,7 +1042,6 @@ audio: "audio/SilentHill (1).wav",
 downloadFile: "audio/SilentHill (1).wav",
 duration: 180
 },
-
 ];
 const licensePrices = {
 basic: 29.99,
@@ -1078,6 +1059,7 @@ let isPlaying = false;
 let audioElement = document.getElementById('audio-element');
 let updateInterval = null;
 let selectedPaymentMethod = 'card';
+
 function navigateTo(sectionId) {
 document.querySelectorAll('main > section').forEach(section => {
 section.classList.remove('section-visible');
@@ -1087,11 +1069,16 @@ const target = document.getElementById(sectionId);
 target.classList.remove('section-hidden');
 target.classList.add('section-visible');
 window.scrollTo(0, 0);
+if (sectionId === 'catalog') {
+filterBeats();
 }
+}
+
 function toggleMobileMenu() {
 const menu = document.getElementById('mobile-menu');
 menu.classList.toggle('hidden');
 }
+
 function renderBeats() {
 const featuredContainer = document.getElementById('featured-beats-container');
 const catalogContainer = document.getElementById('full-catalog-container');
@@ -1102,6 +1089,7 @@ beats.forEach(beat => {
 catalogContainer.innerHTML += createBeatCard(beat);
 });
 }
+
 function createBeatCard(beat) {
 return `
 <div class="bg-brand-card rounded-xl overflow-hidden border border-white/5 hover:border-brand-accent/30 transition-all duration-300 group cursor-pointer" onclick="openBeatDetail(${beat.id})">
@@ -1134,6 +1122,7 @@ ${beat.isFree ? 'Free Download' : 'View Details'}
 </div>
 `;
 }
+
 function openBeatDetail(id) {
 const beat = beats.find(b => b.id === id);
 currentBeat = beat;
@@ -1156,6 +1145,7 @@ audioElement.src = `https://www.soundhelix.com/examples/mp3/SoundHelix-Song-${id
 resetPlayer();
 navigateTo('beat-detail');
 }
+
 function resetPlayer() {
 isPlaying = false;
 audioElement.pause();
@@ -1166,11 +1156,12 @@ document.getElementById('detail-progress-bar').style.width = '0%';
 updateTimer(0);
 if (updateInterval) clearInterval(updateInterval);
 }
+
 function toggleDetailPlay() {
 if (!currentBeat) return;
 if (isPlaying) {
 audioElement.pause();
-document.getElementById('detail-play-btn').innerHTML = '<i class="fas fa-pause text-2xl"></i>';
+document.getElementById('detail-play-btn').innerHTML = '<i class="fas fa-play text-2xl ml-1"></i>';
 document.getElementById('detail-soundwave').classList.add('soundwave-paused');
 } else {
 audioElement.play().catch(e => {
@@ -1187,6 +1178,7 @@ updateTimer(audioElement.currentTime);
 }
 isPlaying = !isPlaying;
 }
+
 function updateTimer(seconds) {
 const mins = Math.floor(seconds / 60);
 const secs = Math.floor(seconds % 60);
@@ -1195,10 +1187,12 @@ const totalSecs = Math.floor(audioElement.duration % 60) || 0;
 document.getElementById('detail-timer').innerText =
 `${mins}:${secs.toString().padStart(2, '0')} / ${totalMins}:${totalSecs.toString().padStart(2, '0')}`;
 }
+
 function skip(seconds) {
 if (!currentBeat) return;
 audioElement.currentTime = Math.max(0, Math.min(audioElement.duration, audioElement.currentTime + seconds));
 }
+
 function seekAudio(event) {
 if (!currentBeat) return;
 const progressContainer = document.getElementById('detail-progress');
@@ -1208,45 +1202,81 @@ const width = rect.width;
 const percentage = clickX / width;
 audioElement.currentTime = percentage * audioElement.duration;
 }
+
+// FIXED: Genre filter now works properly with partial matching
 function filterBeats() {
 const searchTerm = document.getElementById('search-input').value.toLowerCase();
 const genreFilter = document.getElementById('genre-filter').value;
 const catalogContainer = document.getElementById('full-catalog-container');
+const resultsDiv = document.getElementById('filter-results');
+
 const filtered = beats.filter(beat => {
+// Search term matching (title)
 const matchesSearch = beat.title.toLowerCase().includes(searchTerm);
-const matchesGenre = genreFilter === '' || beat.genre === genreFilter;
+
+// Genre matching - exact match or partial match
+let matchesGenre = true;
+if (genreFilter !== '') {
+// Check if beat genre contains the filter value or equals it
+matchesGenre = beat.genre.toLowerCase().includes(genreFilter.toLowerCase()) || 
+beat.genre === genreFilter;
+}
+
 return matchesSearch && matchesGenre;
 });
+
+// Update results count
+if (genreFilter || searchTerm) {
+resultsDiv.innerHTML = `<span class="text-brand-accent">${filtered.length}</span> beat${filtered.length !== 1 ? 's' : ''} found`;
+} else {
+resultsDiv.innerHTML = '';
+}
+
+// Render filtered beats
 catalogContainer.innerHTML = '';
+if (filtered.length === 0) {
+catalogContainer.innerHTML = `
+<div class="col-span-full text-center py-12">
+<i class="fas fa-search text-4xl text-brand-muted mb-4"></i>
+<p class="text-brand-muted">No beats found matching your criteria</p>
+<button onclick="clearFilters()" class="mt-4 text-brand-accent hover:text-white transition-colors">Clear Filters</button>
+</div>
+`;
+} else {
 filtered.forEach(beat => {
 catalogContainer.innerHTML += createBeatCard(beat);
 });
 }
+}
+
+function clearFilters() {
+document.getElementById('search-input').value = '';
+document.getElementById('genre-filter').value = '';
+filterBeats();
+}
+
 function buyBeat(licenseType) {
 if (!currentBeat) return;
 currentLicense = licenseType;
-// Populate payment page with beat and license info
 document.getElementById('summary-beat-cover').src = currentBeat.cover;
 document.getElementById('summary-beat-title').innerText = currentBeat.title;
 document.getElementById('summary-license-type').innerText = licenseNames[licenseType];
 document.getElementById('checkout-beat-cover').src = currentBeat.cover;
 document.getElementById('checkout-beat-title').innerText = currentBeat.title;
 document.getElementById('checkout-license-type').innerText = licenseNames[licenseType];
-// Calculate prices
 const beatPrice = licensePrices[licenseType];
 const processingFee = beatPrice * 0.029;
 const total = beatPrice + processingFee;
-// Update summary
 document.getElementById('summary-beat-price').innerText = `$${beatPrice.toFixed(2)}`;
 document.getElementById('summary-fee').innerText = `$${processingFee.toFixed(2)}`;
 document.getElementById('summary-total').innerText = `$${total.toFixed(2)}`;
 document.getElementById('checkout-subtotal').innerText = `$${beatPrice.toFixed(2)}`;
 document.getElementById('checkout-fee').innerText = `$${processingFee.toFixed(2)}`;
 document.getElementById('checkout-total').innerText = `$${total.toFixed(2)}`;
-// Reset checkout steps
 resetCheckout();
 navigateTo('payment');
 }
+
 function resetCheckout() {
 document.querySelectorAll('.checkout-step').forEach(step => {
 step.classList.remove('active');
@@ -1269,8 +1299,8 @@ indicator.querySelector('span').classList.add('text-brand-muted');
 });
 document.getElementById('customer-form').reset();
 }
+
 function goToStep(step) {
-// Validate step 1
 if (step === 2) {
 const firstName = document.getElementById('first-name').value;
 const lastName = document.getElementById('last-name').value;
@@ -1280,21 +1310,17 @@ if (!firstName || !lastName || !email || !country) {
 alert('Please fill in all required fields');
 return;
 }
-// Populate checkout summary
 document.getElementById('checkout-name').innerText = `${firstName} ${lastName}`;
 document.getElementById('checkout-email').innerText = email;
 }
-// Validate step 3
 if (step === 3) {
 if (!document.getElementById('terms-agree').checked) {
 alert('Please agree to the Terms of Service and License Agreement');
 return;
 }
 }
-// Update steps display
 document.querySelectorAll('.checkout-step').forEach(s => s.classList.remove('active'));
 document.getElementById(`checkout-step-${step}`).classList.add('active');
-// Update progress indicators
 document.querySelectorAll('.checkout-step-indicator').forEach((indicator, index) => {
 const stepNum = index + 1;
 if (stepNum <= step) {
@@ -1312,23 +1338,23 @@ indicator.querySelector('span').classList.add('text-brand-muted');
 }
 });
 }
+
 function selectPaymentMethod(method, element) {
 selectedPaymentMethod = method;
 document.querySelectorAll('.payment-method-card').forEach(card => {
 card.classList.remove('selected');
 });
 element.classList.add('selected');
-// Show/hide payment forms
 document.getElementById('card-payment-form').classList.toggle('hidden', method !== 'card');
 document.getElementById('paypal-payment-info').classList.toggle('hidden', method !== 'paypal');
 document.getElementById('stripe-payment-info').classList.toggle('hidden', method !== 'stripe');
 }
+
 function processPayment() {
 if (!document.getElementById('terms-agree').checked) {
 alert('Please agree to the Terms of Service and License Agreement');
 return;
 }
-// Validate card info if card payment selected
 if (selectedPaymentMethod === 'card') {
 const cardNumber = document.getElementById('card-number').value;
 const cardName = document.getElementById('card-name').value;
@@ -1339,14 +1365,11 @@ alert('Please fill in all payment details');
 return;
 }
 }
-// Show processing state
 document.querySelectorAll('.checkout-step').forEach(s => s.classList.remove('active'));
 document.getElementById('checkout-processing').classList.add('active');
-// Simulate payment processing
 setTimeout(() => {
 document.getElementById('checkout-processing').classList.remove('active');
 document.getElementById('checkout-success').classList.add('active');
-// Update final progress indicator
 document.querySelectorAll('.checkout-step-indicator').forEach(indicator => {
 indicator.querySelector('div').classList.remove('bg-white/10');
 indicator.querySelector('div').classList.add('bg-brand-accent');
@@ -1355,20 +1378,25 @@ indicator.querySelector('span').classList.add('text-white');
 });
 }, 3000);
 }
+
 function downloadLicense() {
-alert('📄 License certificate downloaded!\n\nYour license PDF has been sent to your email address.');
+alert('📄 License certificate downloaded!\nYour license PDF has been sent to your email address.');
 }
+
 function showFreeDownloadModal() {
 document.getElementById('free-download-modal').classList.add('active');
 }
+
 function closeFreeDownloadModal(event) {
 if (event.target.id === 'free-download-modal') {
 document.getElementById('free-download-modal').classList.remove('active');
 }
 }
+
 function closeFreeDownloadModalDirect() {
 document.getElementById('free-download-modal').classList.remove('active');
 }
+
 function confirmFreeDownload() {
 if (!currentBeat) return;
 closeFreeDownloadModalDirect();
@@ -1382,13 +1410,10 @@ document.body.appendChild(link);
 link.click();
 document.body.removeChild(link);
 setTimeout(() => {
-alert(`✅ Download started for "${currentBeat.title}"!
-⚠️ REMINDER: You must include "Prod. Liamliterally" in:
-• Your song TITLE
-• Your video/streaming DESCRIPTION
-Thank you for supporting!`);
+alert(`✅ Download started for "${currentBeat.title}"!\n⚠️ REMINDER: You must include "Prod. Liamliterally" in:\n• Your song TITLE\n• Your video/streaming DESCRIPTION\nThank you for supporting!`);
 }, 500);
 }
+
 function handleContactSubmit(e) {
 e.preventDefault();
 const btn = e.target.querySelector('button[type="submit"]');
@@ -1404,15 +1429,18 @@ btn.disabled = false;
 btn.classList.remove('opacity-75');
 }, 1500);
 }
+
 audioElement.addEventListener('ended', () => {
 isPlaying = false;
 document.getElementById('detail-play-btn').innerHTML = '<i class="fas fa-play text-2xl ml-1"></i>';
 document.getElementById('detail-soundwave').classList.add('soundwave-paused');
 if (updateInterval) clearInterval(updateInterval);
 });
+
 document.addEventListener('DOMContentLoaded', () => {
 renderBeats();
 });
 </script>
 </body>
 </html>
+
